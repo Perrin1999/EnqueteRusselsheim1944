@@ -1,0 +1,1541 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquête — L'affaire de Rüsselsheim, 1944</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap">
+<style>
+:root{ --paper:#efe6d0; --ink:#26211a; --stamp:#b91c1c; --amber:#f59e0b; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{ background:#0c0a09; color:#e7e5e4; font-family:'Special Elite','Courier New',monospace; min-height:100vh; }
+button{ font-family:inherit; cursor:pointer; }
+img{ max-width:100%; }
+/* ---------- fond : le bureau de l'enquêteur ---------- */
+#bg{ position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+#bg .wall{ position:absolute; inset:0;
+ background:
+ radial-gradient(ellipse at 82% 10%, rgba(255,196,110,.16), transparent 46%),
+ radial-gradient(ellipse at 10% 55%, rgba(255,170,90,.07), transparent 55%),
+ repeating-linear-gradient(90deg, rgba(0,0,0,.17) 0 2px, transparent 2px 13px),
+ linear-gradient(168deg,#2c1b10 0%,#1e120a 50%,#130c06 100%); }
+#bg .rail{ position:absolute; left:0; right:0; top:34%; height:7px; background:linear-gradient(180deg,#1c1109,#2e1b0d 60%,#150d06); box-shadow:0 4px 10px rgba(0,0,0,.5); }
+#bg .board{ position:absolute; border-radius:5px;
+ background:
+ repeating-linear-gradient(45deg, rgba(0,0,0,.16) 0 2px, transparent 2px 9px),
+ repeating-linear-gradient(135deg, rgba(255,220,160,.05) 0 1px, transparent 1px 10px),
+ linear-gradient(160deg,#9a6b3e 0%,#7d5230 55%,#653f21 100%);
+ box-shadow: inset 0 0 0 9px rgba(42,25,12,.95), inset 0 0 0 11px rgba(255,220,160,.10), 0 18px 40px rgba(0,0,0,.55); }
+#bg .board.big{ left:1.5%; top:4.5%; width:97%; height:59%; }
+#bg .pin{ position:absolute; background:#e9dcc0; padding:5px 5px 15px; box-shadow:0 7px 16px rgba(0,0,0,.5); }
+#bg .pin img{ width:100%; height:auto; display:block; filter:sepia(.25) contrast(1.05) brightness(.95); }
+#bg .pin i{ position:absolute; top:-5px; left:50%; margin-left:-5px; width:11px; height:11px; border-radius:50%;
+ background:radial-gradient(circle at 35% 30%, #e8837a, #8f2f26 70%); box-shadow:0 2px 3px rgba(0,0,0,.55); }
+#bg .cord{ position:absolute; border-top:2px dashed rgba(185,28,28,.55); transform-origin:0 0; }
+#bg .note{ position:absolute; background:linear-gradient(160deg,#f3e9c8,#ddcd9e); box-shadow:0 5px 12px rgba(0,0,0,.45); padding:8px 10px; color:#4a3818; font-size:9px; line-height:1.5; }
+#bg .note b{ display:block; font-size:10px; margin-bottom:2px; }
+#bg .pin.deskph{ background:none; padding:0; border-radius:2px; box-shadow:0 5px 12px rgba(0,0,0,.35); }
+#bg .pin.deskph i{ display:none; }
+#bg .pin.deskph img{ width:auto; max-width:100%; max-height:16vh; margin:0 auto; border-radius:2px; }
+#bg .stamp{ position:absolute; transform:rotate(8deg); border:3px double rgba(178,44,32,.75); color:rgba(178,44,32,.85); font-weight:700; font-size:12px; letter-spacing:.12em; padding:4px 9px; text-transform:uppercase; background:rgba(243,233,200,.12); }
+#bg .deskzone{ position:absolute; left:0; right:0; bottom:0; height:31%;
+ background:linear-gradient(180deg,#33200f 0%,#261608 16%,#180d05 100%); box-shadow:0 -10px 30px rgba(0,0,0,.55); }
+#bg .deskzone::before{ content:""; position:absolute; left:5%; right:16%; top:10%; height:66%;
+ border-radius:10px;
+ background:
+ repeating-radial-gradient(circle at 30% 45%, rgba(0,0,0,.12) 0 2px, transparent 2px 9px),
+ radial-gradient(ellipse at 30% 45%, rgba(47,84,68,.95), rgba(20,40,30,.95) 75%);
+ box-shadow:inset 0 0 0 2px rgba(255,220,160,.07), 0 4px 10px rgba(0,0,0,.4); }
+#bg .sheet{ position:absolute; width:120px; height:88px; background:linear-gradient(150deg,#efe6d0,#d9cdb4); opacity:.5; box-shadow:0 4px 10px rgba(0,0,0,.4); }
+#bg .sheet::before{ content:""; position:absolute; inset:9px 12px; background:repeating-linear-gradient(0deg, rgba(70,52,24,.5) 0 1px, transparent 1px 6px); }
+#bg svg.lamp{ position:absolute; right:2.5%; bottom:26%; width:250px; height:44%; }
+#bg .glow{ position:absolute; right:0; bottom:0; width:68%; height:75%;
+ background:radial-gradient(ellipse at 88% 96%, rgba(255,196,110,.32) 0%, rgba(255,170,90,.12) 42%, transparent 72%); }
+#bg .vignette{ position:absolute; inset:0; background:radial-gradient(ellipse at 52% 34%, transparent 32%, rgba(8,5,3,.5) 72%, rgba(5,3,2,.8) 100%); }
+@media(max-width:860px){ #bg .board.big{ left:0; width:100%; height:46%; } #bg .note{ font-size:8px; } #bg .stamp{ font-size:10px; } #bg .pin.deskph{ width:32%; } }
+/* ---------- structure ---------- */
+#app{ position:relative; z-index:10; }
+header.top{ position:sticky; top:0; z-index:30; background:rgba(12,10,9,.92); backdrop-filter:blur(6px); border-bottom:1px solid rgba(120,53,15,.35); }
+.hbar{ max-width:72rem; margin:0 auto; padding:.7rem 1rem; display:flex; align-items:center; gap:.75rem; }
+.brand-ico{ transform:rotate(-6deg); flex-shrink:0; }
+.brand-ico .r{ width:40px; height:40px; border-radius:50%; border:2px solid rgba(178,44,32,.85); background:rgba(178,44,32,.12); display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--amber); }
+.brand{ flex:1; min-width:0; }
+.brand .l1{ font-size:11px; letter-spacing:.18em; color:#a8a29e; }
+.brand .l2{ font-size:17px; font-weight:600; color:#fef3c7; }
+.hbtns{ display:flex; gap:.4rem; flex-wrap:wrap; align-items:center; }
+.hbtns .vol{ width:72px; accent-color:var(--amber); vertical-align:middle; }
+.hbtn{ font-size:11px; padding:.25rem .6rem; border-radius:999px; border:1px solid #44403c; background:transparent; color:#a8a29e; }
+.hbtn.on{ border-color:var(--amber); color:#fcd34d; background:rgba(245,158,11,.12); }
+.hbtn.fail{ border-color:#b4544a; color:#e8968c; }
+.hbtn:hover{ color:#e7e5e4; }
+.hsub{ max-width:72rem; margin:0 auto; padding:0 1rem .25rem; display:flex; justify-content:space-between; font-size:11px; color:#a8a29e; }
+.pbarw{ height:6px; background:#292524; }
+.pbar{ height:6px; background:linear-gradient(90deg,#b45309,#fbbf24); transition:width .4s; }
+.shell{ max-width:72rem; margin:0 auto; padding:1rem .75rem 2rem; display:flex; gap:1.25rem; align-items:flex-start; }
+aside.side{ width:256px; flex-shrink:0; position:sticky; top:110px; }
+main.main{ flex:1; min-width:0; max-width:56rem; }
+/* ---------- navigation ---------- */
+.navbox{ border:1px solid #44403c; border-radius:16px; background:rgba(12,10,9,.85); padding:.5rem; box-shadow:0 10px 20px rgba(0,0,0,.4); }
+.navbox button{ display:block; width:100%; text-align:left; border:0; background:transparent; color:#a8a29e; font-size:13px; padding:.5rem .7rem; border-radius:12px; margin-bottom:2px; }
+.navbox button:hover{ background:rgba(41,37,36,.7); color:#fde68a; }
+.navbox button.act{ background:rgba(245,158,11,.15); color:#fde68a; border:1px solid rgba(245,158,11,.6); }
+.navbox button.done{ color:#6ee7b7; }
+.navbox button:disabled{ color:#57534e; cursor:not-allowed; }
+.saver{ font-size:11px; color:rgba(16,185,129,.8); margin:.7rem .25rem 0; }
+.somtit{ font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(217,119,6,.8); padding:.3rem .5rem .2rem; }
+.sombox{ border:1px solid #44403c; border-radius:16px; background:rgba(12,10,9,.85); padding:.5rem; margin-top:.75rem; }
+.sombox ul{ list-style:none; max-height:240px; overflow:auto; padding-right:4px; }
+.sombox button{ display:block; width:100%; text-align:left; font-size:12px; color:#a8a29e; background:transparent; border:0; padding:.4rem .5rem; border-radius:8px; margin-bottom:2px; line-height:1.35; }
+.sombox button:hover{ background:rgba(41,37,36,.7); color:#fde68a; }
+.sombox button:disabled{ color:#57534e; cursor:not-allowed; }
+.sombox .pn{ color:rgba(217,119,6,.7); margin-right:4px; }
+.sombox li.sealed{ color:#78716c; font-size:11px; font-style:italic; padding:.4rem .5rem; }
+.restart{ width:100%; margin-top:.75rem; font-size:12px; padding:.5rem; border-radius:10px; border:1px solid #44403c; background:transparent; color:#a8a29e; }
+.restart:hover{ color:#fca5a5; border-color:rgba(248,113,113,.5); }
+#peek{ display:none; position:fixed; z-index:40; width:256px; border:1px solid rgba(146,64,14,.5); border-radius:12px; background:rgba(12,10,9,.96); box-shadow:0 12px 30px rgba(0,0,0,.5); overflow:hidden; pointer-events:none; }
+#peek .ph{ padding:.4rem .7rem; font-size:10px; text-transform:uppercase; letter-spacing:.2em; color:var(--amber); font-weight:700; border-bottom:1px solid #1c1917; background:rgba(28,25,23,.9); }
+#peek img{ width:100%; height:130px; object-fit:cover; display:block; }
+#peek .noimg{ height:96px; display:flex; align-items:center; justify-content:center; font-size:28px; color:rgba(217,119,6,.5); }
+#peek p{ padding:.5rem .7rem; font-size:12px; color:#d6d3d1; }
+#livret{ display:none; position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.55); overflow:auto; padding:3vh 1rem; }
+#fab{ position:fixed; right:14px; bottom:14px; z-index:30; display:inline-flex; align-items:center; gap:.5rem; background:rgba(20,16,12,.94); color:#fcd34d; border:1px solid rgba(146,64,14,.65); border-radius:999px; padding:.6rem 1rem; font:700 13px Georgia,serif; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,.45); }
+#fab:hover{ background:rgba(32,26,18,.97); border-color:var(--amber); }
+#fab .fico{ font-size:16px; }
+.lvcard{ border:1px solid rgba(146,64,14,.5); background:linear-gradient(160deg,rgba(60,45,25,.5),rgba(35,28,16,.65)); border-radius:12px; padding:.75rem .9rem; margin-bottom:1rem; }
+.lvcard .lvc-t{ margin:0 0 .25rem; font-size:10.5px; font-weight:800; letter-spacing:.16em; color:var(--amber); text-transform:uppercase; }
+.lvcard .lvc-s{ margin:0 0 .6rem; font-size:11.5px; color:#d6c9a8; font-style:italic; }
+.lvcard .lvc-b{ width:100%; background:rgba(245,158,11,.14); border:1px solid var(--amber); color:#fcd34d; border-radius:999px; padding:.4rem 0; font:700 12.5px Georgia,serif; cursor:pointer; }
+.lvcard .lvc-b:hover{ background:rgba(245,158,11,.28); }
+.chemise{ max-width:620px; margin:0 auto; background:linear-gradient(165deg,#d3b98b,#c2a671 55%,#b3965f); border-radius:10px 16px 16px 10px; border:1px solid #8f774a; box-shadow:0 18px 50px rgba(0,0,0,.55), inset 0 0 60px rgba(120,90,40,.25); padding:.55rem .7rem 1rem; position:relative; }
+.chtop{ display:flex; justify-content:space-between; align-items:center; gap:.8rem; padding:.35rem .6rem .55rem; }
+.chref{ margin:0; font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:800; color:#5d451a; }
+.livclose{ font-size:12px; padding:.3rem .8rem; border-radius:999px; border:1px solid #8f774a; background:transparent; color:#5d451a; cursor:pointer; white-space:nowrap; }
+.pagezone{ position:relative; perspective:1600px; }
+.lvpage{ background:linear-gradient(178deg,#f8f0da,#f1e5c6); border-radius:4px; box-shadow:0 3px 12px rgba(50,30,5,.35), inset 0 0 40px rgba(150,110,50,.12); padding:1.1rem 1.2rem 1.3rem; width:min(100%,46.7vh); aspect-ratio:210/297; margin:0 auto; overflow-y:auto; overflow-x:hidden; scrollbar-width:thin; scrollbar-color:#b8a37a transparent; transform-origin:0 50%; transition:transform .33s cubic-bezier(.5,.05,.6,.25), opacity .33s; }
+.lvpage.out{ transform:rotateY(-78deg); opacity:0; }
+.lvpage.outl{ transform:rotateY(78deg); opacity:0; transform-origin:100% 50%; }
+.lvpage.in{ transform:rotateY(78deg); opacity:0; transition:none; }
+.lvpage.inl{ transform:rotateY(-78deg); opacity:0; transform-origin:100% 50%; transition:none; }
+.turnz{ position:absolute; top:44%; transform:translateY(-50%); z-index:5; width:34px; height:56px; border:1px solid rgba(93,69,26,.4); background:rgba(211,185,139,.9); color:#5d451a; border-radius:8px; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; opacity:.75; }
+.turnz:hover{ opacity:1; background:rgba(190,160,105,.95); }
+.turnz.l{ left:-10px; } .turnz.r{ right:-10px; }
+.lvnav{ display:flex; align-items:center; justify-content:center; gap:.9rem; padding:.8rem .2rem 0; }
+.lvnav .lvbtn{ font-size:12px; padding:.35rem .85rem; border-radius:999px; border:1px solid #8f774a; background:rgba(255,250,235,.35); color:#5d451a; cursor:pointer; font-weight:700; }
+.lvnav .lvbtn:hover{ background:rgba(255,250,235,.6); }
+.lvnav .lvbtn:disabled{ opacity:.35; cursor:default; }
+#lvpg{ margin:0; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:#6b5527; min-width:170px; text-align:center; }
+.lvcover{ text-align:center; padding:1.2rem; min-height:100%; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; }
+.lvstamp{ display:inline-block; border:3px solid var(--stamp); color:var(--stamp); font:800 13px Georgia,serif; letter-spacing:.24em; padding:6px 14px; border-radius:4px; transform:rotate(-6deg); margin-bottom:1.1rem; text-transform:uppercase; opacity:.85; }
+.lvct{ margin:0 0 .4rem; font-size:26px; font-weight:800; letter-spacing:.02em; color:#3d2f14; }
+.lvca{ margin:.2rem 0 .8rem; font-size:14px; font-weight:700; color:#6b5527; }
+.lvcc{ margin:.2rem 0 1.4rem; font-size:12.5px; font-style:italic; color:#7a6330; }
+.lvchint{ margin:0 auto; max-width:330px; font-size:12px; font-style:italic; color:#8a7444; border-top:1px dashed #a8925f; padding-top:.8rem; }
+.lvpgseal{ min-height:100%; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.9rem; background:#efe4c8; border:1px dashed #a8925f; border-radius:4px; margin:.4rem 0; padding:1rem; }
+.lvseal{ width:52px; height:52px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#b8442f,#6e1d12); color:#f3d9c8; display:flex; align-items:center; justify-content:center; font:800 9px Georgia,serif; letter-spacing:.05em; transform:rotate(-8deg); box-shadow:0 2px 5px rgba(0,0,0,.35); flex-shrink:0; }
+.lvps-t{ margin:0; font-weight:800; font-size:15px; color:#6b5527; }
+.lvs-s{ margin:.15rem 0 0; font-size:12.5px; font-style:italic; color:#8a7444; max-width:320px; }
+.lvsec{ background:rgba(255,252,240,.6); border:1px solid #c9b787; border-radius:4px; padding:.85rem 1rem .95rem; margin-bottom:0; box-shadow:0 1px 3px rgba(60,40,10,.12); }
+.lvsec.done{ border-left:5px solid #5c8a4a; }
+.lvsec.wip{ border-left:5px solid #c07f16; }
+.lvhead2{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; margin-bottom:.35rem; }
+.lvstampS{ font:800 9.5px Georgia,serif; letter-spacing:.14em; padding:2px 8px; border-radius:2px; border:1.5px solid; transform:rotate(-2deg); white-space:nowrap; text-transform:uppercase; }
+.lvstampS.ok{ color:#2f6b1f; border-color:#2f6b1f; background:rgba(92,138,74,.08); }
+.lvstampS.wip{ color:#8a5a0b; border-color:#8a5a0b; background:rgba(192,127,22,.1); }
+.lvsec .lt{ margin:0; font-weight:800; font-size:14px; color:#3d2f14; }
+.lvsec .lsub{ margin:.65rem 0 .15rem; font-size:10.5px; text-transform:uppercase; letter-spacing:.14em; font-weight:700; color:#7a6330; }
+.lvsec .lval{ margin:0; font-size:14px; color:#2c2314; }
+.lvsec ul.lp{ margin:.2rem 0 0; padding-left:1.2rem; font-size:13.5px; }
+.lvsec ul.lp li{ margin:.15rem 0; }
+.lvpieces{ display:flex; flex-wrap:wrap; gap:.7rem; margin:.4rem 0 .1rem; }
+.lvp{ width:150px; background:#fffdf5; border:1px solid #b8a37a; border-radius:3px; padding:5px 5px 2px; box-shadow:0 2px 6px rgba(60,40,10,.3); transform:rotate(-1.2deg); cursor:pointer; font:inherit; color:inherit; text-align:center; }
+.lvp:nth-child(even){ transform:rotate(1.1deg); }
+.lvp:hover{ transform:rotate(0) translateY(-3px); box-shadow:0 6px 14px rgba(60,40,10,.4); border-color:#8a6a30; }
+.lvp img{ width:100%; height:105px; object-fit:cover; border-radius:2px; display:block; background:#e9dcba; }
+.lvp .lvi{ width:100%; height:105px; border-radius:2px; background:#efe6d0; display:flex; align-items:center; justify-content:center; font-size:30px; color:#8a6a30; box-sizing:border-box; }
+.lvp .lpn{ display:block; font-size:10px; color:#6b5527; font-weight:700; margin:.3rem 0 .25rem; line-height:1.3; }
+.lvp.dim img, .lvp.dim .lvi{ opacity:.45; filter:grayscale(.7); }
+.livsec ul.lp li{ margin:.15rem 0; }
+.reqbloc{ border:1px dashed #57503f; border-radius:10px; padding:.7rem .9rem; margin:.8rem 0; background:rgba(20,17,14,.35); }
+.objcard{ border:1px solid #44403c; border-radius:12px; padding:.9rem 1rem 1rem; margin:.9rem 0; background:rgba(28,25,23,.55); }
+.objtag{ margin:0 0 .4rem; font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:800; color:#e8968c; }
+.objarg{ margin:0 0 .5rem; font-style:italic; font-size:15px; color:#e7d8c0; line-height:1.5; }
+.objq{ margin:0 0 .6rem; font-size:12.5px; font-weight:700; color:#fcd34d; }
+.objopts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.6rem; }
+.objopt{ position:relative; text-align:left; background:rgba(12,10,9,.8); border:1px solid #44403c; border-radius:10px; padding:.5rem; cursor:pointer; font:inherit; color:#e7e5e4; display:flex; flex-direction:column; gap:.3rem; }
+.objopt:hover{ border-color:var(--amber); }
+.objopt.sel{ border-color:var(--amber); box-shadow:0 0 0 1px var(--amber); }
+.objopt.ok{ border-color:#7bb661; box-shadow:0 0 0 1px #7bb661; }
+.objopt.ko{ border-color:#e8968c; box-shadow:0 0 0 1px #e8968c; }
+.objopt img{ width:100%; height:80px; object-fit:cover; border-radius:6px; display:block; background:#1c1917; }
+.objopt .oi{ height:80px; display:flex; align-items:center; justify-content:center; font-size:26px; color:rgba(217,119,6,.5); }
+.objopt .opn{ font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); }
+.objopt .ot{ font-size:11px; line-height:1.35; color:#d6d3d1; }
+.objexp{ margin-top:.7rem; border-left:3px solid #7bb661; background:rgba(20,25,18,.45); border-radius:0 8px 8px 0; padding:.55rem .8rem; font-size:12.5px; color:#e7e5e4; line-height:1.55; }
+.oexp{ margin:0 0 .3rem; font-weight:800; }
+.oexp.ok{ color:#7bb661; } .oexp.ko{ color:#e8968c; }
+.reqbloc .rt{ margin:0 0 .25rem; font-weight:700; color:#fcd34d; font-size:14px; }
+.reqbloc .ram{ margin:0 0 .55rem; font-style:italic; color:#d6c9a8; font-size:13.5px; }
+#gate{ display:none; position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.55); }
+#gate .gatebox{ max-width:340px; margin:18vh auto 0; background:rgba(12,10,9,.97); border:1px solid rgba(146,64,14,.5); border-radius:12px; padding:1.2rem 1.3rem; box-shadow:0 12px 30px rgba(0,0,0,.5); text-align:center; }
+#gate .gt{ margin:0 0 .35rem; font-size:15px; font-weight:800; letter-spacing:.06em; color:var(--amber); }
+#gate .gs{ margin:0 0 .9rem; font-size:12px; color:#d6d3d1; line-height:1.5; }
+#gatein{ width:150px; box-sizing:border-box; background:rgba(28,25,23,.9); color:#e7e5e4; border:1px solid #57503f; border-radius:8px; padding:.5rem .7rem; font:600 16px Georgia,serif; text-align:center; letter-spacing:.3em; margin-bottom:.7rem; }
+#gatein:focus{ outline:none; border-color:var(--amber); }
+.gbtn{ background:#b4544a; color:#fff; border:0; border-radius:8px; padding:.45rem 1rem; font:600 13px Georgia,serif; cursor:pointer; }
+.gbtn:hover{ background:#c96a60; }
+.gbtn.ghost{ background:transparent; border:1px solid #57503f; color:#a8a29e; }
+#gate .gerr{ display:none; margin:.7rem 0 0; font-size:12.5px; color:#e8968c; font-weight:700; }
+.finwrap{ text-align:center; margin:1.6rem 0 .6rem; }
+.finstamp{ display:inline-block; padding:.5rem 1.3rem; border:3px double var(--stamp); border-radius:6px; color:var(--stamp); font-weight:800; letter-spacing:.28em; text-transform:uppercase; transform:rotate(-3deg); font-size:14px; }
+.navmob{ display:none; flex-wrap:wrap; gap:6px; margin-bottom:1rem; }
+.navmob button{ font-size:12px; padding:.25rem .6rem; border-radius:999px; border:1px solid #292524; background:transparent; color:#78716c; }
+.navmob button.act{ border-color:var(--amber); background:rgba(245,158,11,.15); color:#fde68a; }
+.navmob button.done{ border-color:rgba(6,95,70,.6); background:rgba(6,78,59,.2); color:#6ee7b7; }
+.navmob button:disabled{ cursor:not-allowed; }
+/* ---------- contenus ---------- */
+h1.steph{ font-size:1.6rem; color:#fef3c7; margin:0 .25rem 1rem; line-height:1.3; }
+@media(min-width:640px){ h1.steph{ font-size:1.9rem; } }
+.narr{ border:1px solid rgba(68,64,60,.6); background:rgba(12,10,9,.85); border-radius:16px; padding:1rem 1.1rem; margin-bottom:1.5rem; color:#d6d3d1; line-height:1.7; white-space:pre-line; }
+.doctit{ font-size:12px; text-transform:uppercase; letter-spacing:.2em; color:rgba(217,119,6,.8); margin:0 .25rem .8rem; }
+.docsbox{ border:1px solid rgba(68,64,60,.6); background:rgba(12,10,9,.7); border-radius:16px; padding:.9rem; margin-bottom:1.5rem; }
+.qbox{ border:1px solid rgba(120,53,15,.4); background:rgba(12,10,9,.85); border-radius:16px; padding:1rem 1.1rem; }
+/* enveloppe pièce fermée */
+.env{ margin-bottom:1.25rem; position:relative; cursor:pointer; user-select:none; perspective:900px; }
+.env .cardface{ border-radius:12px; overflow:hidden; border:1px solid; box-shadow:0 10px 20px rgba(0,0,0,.45); }
+.env .inner{ position:relative; height:122px; }
+.env .flap{ position:absolute; left:0; right:0; top:0; height:50%; transform-origin:top; transition:transform .7s;
+ clip-path:polygon(0 0,100% 0,50% 100%); border-bottom:1px solid rgba(0,0,0,.25); }
+.env.opening .flap{ transform:rotateX(180deg); }
+.env .face{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; text-align:center; padding:0 1rem; }
+.env .pn{ font-size:10px; letter-spacing:.25em; font-weight:700; text-transform:uppercase; }
+.env .ti{ font-size:15px; font-weight:600; line-height:1.3; }
+.env .tampon{ font-size:10px; text-transform:uppercase; letter-spacing:.2em; color:var(--stamp); border:2px solid var(--stamp); padding:2px 10px; transform:rotate(-5deg); opacity:.85; margin-top:4px; }
+.env .hint{ text-align:center; font-size:12px; color:#78716c; margin-top:.5rem; }
+.env.dark .cardface{ background:#1c1917; border-color:#57534e; } .env.dark .flap{ background:#292524; } .env.dark .face{ color:#d6d3d1; }
+.env.paper .cardface{ background:#efe6d0; border-color:#8a7a55; } .env.paper .flap{ background:#d9cdb4; } .env.paper .face{ color:#26211a; }
+/* pièce ouverte */
+.doc{ border:1px solid; border-radius:12px; overflow:hidden; box-shadow:0 10px 20px rgba(0,0,0,.45); margin-bottom:1.25rem; position:relative; }
+.doc.paper{ background:var(--paper); color:var(--ink); border-color:rgba(68,64,60,.5); }
+.doc.dark{ background:rgba(28,25,23,.85); border-color:rgba(68,64,60,.7); }
+.doc .corner{ position:absolute; top:8px; right:8px; z-index:5; font-size:10px; text-transform:uppercase; letter-spacing:.2em; font-weight:700; color:var(--stamp);
+ border:2px solid rgba(185,28,28,.7); padding:1px 8px; transform:rotate(6deg); background:rgba(185,28,28,.06); pointer-events:none; }
+.doc .dhead{ padding:.7rem 1rem .5rem; border-bottom:1px solid; display:flex; gap:8px; align-items:flex-start; }
+.doc.paper .dhead{ border-color:rgba(68,64,60,.4); } .doc.dark .dhead{ border-color:rgba(68,64,60,.6); }
+.doc .dhead .ic{ font-size:17px; line-height:1; margin-top:2px; }
+.doc.paper .dhead .ic{ color:#57534e; } .doc.dark .dhead .ic{ color:rgba(245,158,11,.9); }
+.doc .dhead .t{ font-size:15px; font-weight:600; line-height:1.35; }
+.doc.paper .dhead .t{ color:#292524; } .doc.dark .dhead .t{ color:rgba(254,243,199,.9); }
+.doc .tabs{ display:flex; gap:4px; padding:8px 1rem 0; }
+.doc .tabs button{ font-size:12px; padding:4px 12px; border-radius:8px 8px 0 0; background:transparent; color:#a8a29e; border:0; }
+.doc .tabs button.act{ background:#292524; color:#fcd34d; }
+.doc .body{ padding:1rem; }
+.doc.dark .body{ background:rgba(41,37,36,.7); }
+.doc p.src{ font-size:13px; font-style:italic; margin-top:.75rem; }
+.doc.paper p.src{ color:rgba(68,64,60,.8); } .doc.dark p.src{ color:#78716c; }
+.doc p.cap{ font-size:14px; margin-top:.5rem; line-height:1.6; }
+.doc.paper p.cap{ color:#57534e; } .doc.dark p.cap{ color:rgba(254,243,199,.8); }
+.doc .tx p{ margin-bottom:.6rem; line-height:1.7; font-size:15px; }
+.doc.paper .tx p{ color:var(--ink); } .doc.dark .tx p{ color:#d6d3d1; }
+.imgwrap{ display:block; }
+.imgwrap img{ width:100%; border-radius:8px; border:1px solid #44403c; cursor:zoom-in; display:block; }
+.imgwrap.fail::after{ content:"📷 Photo — visible dans la version téléchargée / hébergée du site"; display:block; padding:44px 12px; text-align:center; border:1px dashed #57534e; color:#a8a29e; background:#1c1917; font-size:13px; border-radius:8px; }
+.doc.paper .imgwrap img{ border-color:#8a7a55; }
+.imgwrap.hotwrap{ position:relative; }
+.hzone{ position:absolute; width:28px; height:28px; border-radius:50%; transform:translate(-50%,-50%); font-size:12px; font-weight:700;
+ background:rgba(12,10,9,.7); border:2px solid rgba(245,158,11,.8); color:#fde68a; }
+.hzone:hover{ background:rgba(245,158,11,.6); }
+.hzone.vis{ background:rgba(217,119,6,.85); border-color:#fcd34d; color:#0c0a09; }
+.hotinfo{ margin-top:.75rem; }
+.hotinfo .cons{ font-size:14px; color:#fcd34d; margin-bottom:.4rem; }
+.hotinfo .zbox{ margin-top:.5rem; border:1px solid rgba(180,83,9,.5); background:rgba(69,26,3,.3); border-radius:10px; padding:.75rem; }
+.hotinfo .zl{ font-size:14px; font-weight:600; color:#fcd34d; margin-bottom:.25rem; }
+.hotinfo .zt{ font-size:14px; color:#d6d3d1; line-height:1.6; }
+.hotwrap .hzbox{ position:absolute; transform:translateX(-50%); width:60%; max-width:340px; z-index:4; margin-top:16px;
+ border:1px solid rgba(180,83,9,.5); background:rgba(28,20,12,.94); border-radius:10px; padding:.75rem;
+ box-shadow:0 8px 18px rgba(0,0,0,.5); }
+.hotwrap .hzbox .zl{ font-size:14px; font-weight:600; color:#fcd34d; margin-bottom:.25rem; }
+.hotwrap .hzbox .zt{ font-size:13px; color:#d6d3d1; line-height:1.55; }
+/* surlignage */
+.surl{ }
+.surl .cons{ font-size:13px; color:#78716c; margin-bottom:.5rem; }
+.doc.paper .surl .cons{ color:#57534e; }
+.surl .seg{ cursor:pointer; border-radius:3px; padding:0 2px; line-height:2; }
+.surl .seg:hover{ background:rgba(245,158,11,.2); }
+.surl .seg.sel{ background:rgba(251,191,36,.4); text-decoration:underline; text-decoration-color:#f59e0b; }
+.surl .seg.ok{ background:rgba(16,185,129,.3); text-decoration:underline; text-decoration-color:#34d399; }
+.surl .seg.no{ color:#78716c; }
+.surl .bad{ background:rgba(239,68,68,.25); text-decoration:line-through; }
+.okmark{ color:#7bb661; font-weight:700; }
+.komark{ color:#e8968c; font-weight:700; }
+.surlhead{ font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--stamp); margin-bottom:.4rem; }
+.doc.dark .surlhead{ color:#fca5a5; }
+.surlbtn{ margin-top:.7rem; font-size:13px; font-weight:600; padding:.4rem 1rem; border-radius:10px; border:0; background:var(--amber); color:#1c1917; }
+.surlbtn:disabled{ background:#292524; color:#78716c; cursor:not-allowed; }
+.fb-ok{ color:#10b981; font-size:13px; margin-top:.5rem; font-weight:600; }
+.fb-ko{ color:#ef4444; font-size:13px; margin-top:.5rem; font-weight:600; }
+/* questions */
+.qq{ font-size:15px; font-weight:600; color:#e7e5e4; margin-bottom:.5rem; line-height:1.5; }
+.fmt{ display:inline-block; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+ border:1px solid rgba(217,119,6,.5); color:#fcd34d; background:rgba(120,53,15,.15); border-radius:999px; padding:2px 10px; margin:-0.25rem 0 .6rem; }
+.tin{ width:110px; background:rgba(28,25,23,.9); border:0; border-bottom:2px solid #d97706; color:#fcd34d;
+ font:600 15px Georgia,serif; text-align:center; padding:2px 4px; margin:0 2px; border-radius:4px 4px 0 0; }
+.tin:focus{ outline:none; border-bottom-color:#fcd34d; background:rgba(41,37,36,1); }
+.tin.ok{ border-bottom-color:#7bb661; color:#7bb661; }
+.tin.bad{ border-bottom-color:#e8968c; color:#e8968c; }
+select.tin{ width:auto; min-width:110px; cursor:pointer; appearance:menulist; text-align:left; }
+select.tin option{ color:#f5f0e6; background:#1c1917; }
+.qopt{ display:block; width:100%; text-align:left; font-size:15px; border-radius:10px; padding:.5rem .8rem; margin-bottom:6px;
+ border:1px solid #44403c; background:rgba(28,25,23,.7); color:#d6d3d1; }
+.qopt:hover{ border-color:rgba(217,119,6,.6); }
+.qopt.sel{ border-color:var(--amber); background:rgba(245,158,11,.1); color:#fef3c7; }
+.qopt.good{ border-color:#10b981; background:rgba(16,185,129,.1); color:#a7f3d0; }
+.qopt.bad{ border-color:#ef4444; background:rgba(239,68,68,.1); color:#fca5a5; }
+.qitem{ margin-bottom:1rem; }
+textarea.open{ width:100%; border-radius:10px; border:1px solid #44403c; background:rgba(28,25,23,.8); color:#e7e5e4; padding:.6rem .7rem; font-family:inherit; font-size:15px; }
+textarea.open:focus{ outline:none; border-color:var(--amber); }
+.mhint{ font-size:12px; color:#78716c; margin-top:4px; }
+/* frise */
+.frisewrap{ overflow-x:auto; padding-bottom:8px; margin:0 -4px; padding-left:4px; padding-right:4px; }
+.frise{ min-width:860px; position:relative; padding-top:4px; }
+.frise .line{ position:absolute; top:16px; left:0; right:0; height:2px; background:linear-gradient(90deg, rgba(180,83,9,.6), rgba(245,158,11,.8), rgba(180,83,9,.6)); }
+.fgrid{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; }
+.fcol{ display:flex; flex-direction:column; position:relative; }
+.fdot{ position:relative; z-index:2; margin:0 auto; width:28px; height:28px; border-radius:50%; border:2px solid rgba(180,83,9,.6); background:#0c0a09; color:rgba(245,158,11,.7); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.fdot.on{ background:var(--amber); border-color:#fcd34d; color:#1c1917; }
+.fdate{ font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:rgba(245,158,11,.8); text-align:center; margin:4px 0; height:24px; line-height:1.4; }
+.fslot{ flex:1; font-size:12px; border-radius:10px; padding:8px; border:1px dashed #44403c; background:rgba(28,25,23,.5); color:#a8a29e; font-style:italic; min-height:76px; }
+.fslot.filled{ border-style:solid; border-color:rgba(180,83,9,.6); background:rgba(41,37,36,.8); color:#e7e5e4; font-style:normal; }
+.fslot.ok{ border-color:rgba(6,95,70,.6); background:rgba(6,78,59,.2); color:#d1fae5; }
+.frem{ display:block; margin-top:4px; font-size:10px; color:#78716c; background:transparent; border:0; text-decoration:underline; }
+.frem:hover{ color:#f87171; }
+.fpool{ margin-top:1rem; border-top:1px solid rgba(68,64,60,.7); padding-top:.7rem; }
+.fpool .pt{ font-size:11px; text-transform:uppercase; letter-spacing:.2em; color:#78716c; margin-bottom:.4rem; }
+.fpool button{ display:block; width:100%; text-align:left; font-size:13px; border:1px solid #44403c; background:#0c0a09; color:#d6d3d1; padding:.5rem .7rem; border-radius:10px; margin-bottom:8px; }
+.fpool button:hover{ border-color:rgba(217,119,6,.7); background:rgba(245,158,11,.1); }
+/* association */
+.matchgrid{ display:grid; grid-template-columns:1fr; gap:12px; }
+@media(min-width:640px){ .matchgrid{ grid-template-columns:1fr 1fr; } }
+.matchrow{ display:flex; flex-direction:column; gap:6px; }
+.mbtn{ width:100%; text-align:left; font-size:13px; border-radius:10px; padding:.5rem .7rem; border:1px solid #44403c; background:rgba(28,25,23,.7); color:#d6d3d1; }
+.mbtn .nm{ font-weight:600; }
+.mbtn .as{ display:block; font-size:12px; color:#a8a29e; margin-top:2px; }
+.mbtn .rm{ display:block; font-size:10px; color:rgba(245,158,11,.8); margin-top:2px; }
+.mbtn.pick{ border-color:var(--amber); background:rgba(245,158,11,.2); color:#fef3c7; }
+.mbtn.used{ border-color:#292524; background:rgba(28,25,23,.4); color:#57534e; text-decoration:line-through; cursor:default; }
+.mbtn.wait{ border-color:rgba(180,83,9,.6); background:rgba(28,25,23,.7); color:#e7e5e4; }
+.mbtn:disabled{ cursor:default; }
+.mq1{ font-size:15px; font-weight:600; color:rgba(254,243,199,.9); margin-bottom:.25rem; }
+.mq2{ font-size:13px; color:#a8a29e; margin-bottom:.75rem; }
+/* validation */
+.vbtn{ margin-top:.5rem; width:100%; padding:.65rem; border-radius:10px; font-weight:600; font-size:14px; border:0; }
+.vbtn.ok{ background:var(--amber); color:#1c1917; }
+.vbtn.ok:hover{ background:#fbbf24; }
+.vbtn.no{ background:#292524; color:#78716c; cursor:not-allowed; }
+.vdone{ margin-top:.5rem; display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+.vdone .sc{ font-size:12px; color:#34d399; font-weight:600; }
+.nextbtn{ font-size:12px; padding:.4rem .8rem; border-radius:10px; background:var(--amber); color:#1c1917; border:0; font-weight:600; }
+.nextbtn:hover{ background:#fbbf24; }
+/* lettre d'introduction */
+.introbox{ border:1px solid rgba(120,53,15,.4); background:rgba(12,10,9,.85); border-radius:16px; padding:1.2rem; margin-bottom:1.5rem; }
+.introbox .mode{ font-size:12px; text-transform:uppercase; letter-spacing:.2em; color:rgba(217,119,6,.8); margin-bottom:.8rem; }
+.introbox ul{ list-style:none; color:#d6d3d1; line-height:1.6; font-size:15px; display:flex; flex-direction:column; gap:8px; margin-bottom:1.2rem; }
+.introbox label{ display:block; font-size:13px; color:#a8a29e; margin-bottom:4px; }
+.namein{ width:100%; max-width:320px; margin-bottom:1.4rem; border-radius:10px; background:#0c0a09; border:1px solid #44403c; padding:.55rem .7rem; font-size:15px; color:#fef3c7; font-family:inherit; }
+.namein:focus{ outline:none; border-color:var(--amber); }
+.envletw{ display:flex; justify-content:center; }
+.envlet{ position:relative; width:300px; height:190px; cursor:pointer; perspective:900px; user-select:none; }
+.envlet .back{ position:absolute; inset:0; border-radius:6px; box-shadow:0 20px 40px rgba(0,0,0,.5); background:#c9b48a; border:2px solid #a08c5f; }
+.envlet .flap2{ position:absolute; left:0; right:0; top:0; height:50%; transform-origin:top; transition:transform .7s;
+ background:#b8a274; clip-path:polygon(0 0,100% 0,50% 100%); border:2px solid #a08c5f; }
+.envlet.opening .flap2{ transform:rotateX(180deg); }
+.envlet .face{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 1rem; color:var(--ink); }
+.envlet .w1{ font-size:10px; letter-spacing:.2em; font-weight:700; margin-bottom:4px; }
+.envlet .w2{ font-size:12px; }
+.envlet .w3{ font-size:11px; margin-top:4px; }
+.envlet .w4{ font-size:10px; text-transform:uppercase; letter-spacing:.2em; margin-top:8px; color:#7a1f12; border:2px solid #7a1f12; padding:2px 8px; transform:rotate(-4deg); }
+.envhint{ text-align:center; font-size:13px; color:#a8a29e; margin-top:1rem; }
+.letter{ border-radius:10px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,.5); background:var(--paper); color:var(--ink); }
+.letter .lbody{ padding:1.6rem 1.4rem; }
+@media(min-width:640px){ .letter .lbody{ padding:2rem 2.5rem; } }
+.lhead{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:1.2rem; padding-bottom:.8rem; border-bottom:2px solid var(--ink); }
+.lhead .a{ font-size:12px; letter-spacing:.15em; font-weight:700; }
+.lhead .b{ font-size:12px; }
+.lhead .c{ font-size:12px; text-align:right; line-height:1.4; }
+.letter p.l{ margin-bottom:1rem; line-height:1.75; }
+.polas{ display:flex; flex-wrap:wrap; gap:1rem; margin:1.2rem 0; }
+.pola{ width:190px; flex-shrink:0; background:#fff; padding:6px; box-shadow:0 3px 8px rgba(0,0,0,.35); }
+@media(min-width:640px){ .pola{ width:215px; } }
+.pola.r1{ transform:rotate(-1.5deg); } .pola.r2{ transform:rotate(1.5deg); } .pola.r3{ transform:rotate(-1deg); }
+.pola .imgwrap img{ border:0; }
+.pola .pl{ font-size:11px; font-style:italic; margin-top:4px; color:#292524; }
+.pj{ border-left:4px solid var(--ink); padding-left:1rem; margin:1.2rem 0; }
+.pj .pjt{ font-size:12px; text-transform:uppercase; letter-spacing:.2em; font-weight:700; margin-bottom:.5rem; }
+.pj .pjq{ font-style:italic; line-height:1.75; }
+.lsign{ display:flex; justify-content:space-between; align-items:flex-end; margin-top:1.5rem; gap:12px; }
+.lsign .sl{ font-size:12px; line-height:1.4; }
+.lsign .sr{ text-align:right; }
+.lsign .sr .n{ font-size:15px; margin-bottom:4px; }
+.lsign .sr .r{ font-size:12px; }
+/* rapport final */
+.report{ margin-top:1.5rem; border:1px solid rgba(245,158,11,.4); background:rgba(69,26,3,.2); border-radius:16px; padding:1.2rem; }
+.report h2{ font-size:17px; color:#fcd34d; margin-bottom:.5rem; }
+.report .ri{ font-size:13px; color:#a8a29e; margin-bottom:.75rem; line-height:1.5; }
+.report pre{ max-height:240px; overflow:auto; font-size:12px; color:#d6d3d1; background:rgba(12,10,9,.8); border:1px solid #44403c; border-radius:10px; padding:.75rem; white-space:pre-wrap; }
+.copybtn{ margin-top:.75rem; padding:.5rem 1rem; border-radius:10px; background:var(--amber); color:#1c1917; border:0; font-size:14px; font-weight:600; }
+.copybtn:hover{ background:#fbbf24; }
+.foot{ text-align:center; font-size:11px; color:#57534e; margin-top:2rem; }
+/* lightbox */
+.lightbox{ position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.92); display:flex; align-items:center; justify-content:center; padding:1rem; cursor:zoom-out; }
+.lightbox img{ max-height:90vh; max-width:100%; border-radius:10px; box-shadow:0 20px 50px rgba(0,0,0,.6); }
+.lightbox .lx{ position:absolute; bottom:16px; left:0; right:0; text-align:center; color:#a8a29e; font-size:12px; }
+@media(max-width:767px){
+ aside.side{ display:none; }
+ .navmob{ display:flex; }
+ #fab{ right:10px; bottom:10px; padding:.45rem .8rem; font-size:12px; }
+ .chemise{ padding:.3rem .35rem .7rem; }
+ .lvpage{ width:100%; padding:.8rem .7rem .9rem; }
+ #lvpg{ min-width:0; }
+ .turnz{ width:28px; height:46px; top:42%; }
+ header.top .brand-ico{ display:none; }
+ header.top .brand .l1{ display:none; }
+ header.top .brand .l2{ font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+ header.top .hbtns .vol{ display:none; }
+ header.top .hbtns{ flex-wrap:nowrap; flex-shrink:0; }
+ header.top .hbtn{ font-size:10px; padding:.2rem .45rem; white-space:nowrap; }
+ .hbar{ padding:.45rem .6rem; gap:.4rem; }
+ .hsub{ padding:0 .6rem .3rem; font-size:10px; }
+ .pbarw{ height:4px; } .pbar{ height:4px; }
+}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="app"></div>
+<div id="peek"></div>
+<div id="livret"></div>
+<button id="fab" onclick="G.toggleLivret()"><span class="fico">&#128194;</span> Livret d'enquêteur</button>
+<div id="gate"><div class="gatebox"><p class="gt">&#128273; Aperçu enseignant</p><p class="gs">Cette vue d&eacute;voile les r&eacute;ponses du dossier. R&eacute;serv&eacute; au professeur.</p><input id="gatein" type="password" inputmode="numeric" autocomplete="off" placeholder="Code d'acc&egrave;s" onkeydown="if(event.key===\'Enter\'){G.gateCheck();}"><button class="gbtn" onclick="G.gateCheck()">Valider</button> <button class="gbtn ghost" onclick="G.gateClose()">Annuler</button><p class="gerr" id="gatemsg">&#10007; Code incorrect.</p></div></div>
+<input type="file" id="musicpick" accept="audio/*" style="display:none">
+
+<script>
+var D=function(id,w){ return "https://lh3.googleusercontent.com/d/"+id+"=w"+(w||1600); };
+var IMG={
+marche45:D("1fJcr6IxZkEDQ5Py68xFPn-MY-2H_FEOy"),
+dossier12:D("1iQeinKw__wVWWbnNJJK8rqlhynZLSU0r",2000),
+tribunal:D("1j_3DuGysTV2zNsyn7rwfwcN18zJK6Ri3",2000),
+hanovre:D("1YGIyOivTyMPcyhnKdgSCKPTc9fHCKovF"),
+b24bomb:D("1oybrIesqA0mwxdPpKyQ5nyI_QhY-BNRP"),
+dresde:D("1C-gGIE1A-AoDXBsHAEHHAURUC0SBbiJe"),
+equipageNB:D("1rtLCHUaWflTLFXxvtl9S7gAwaDOKCKgk"),
+moteur:D("1sD2baV6BBP3iDPU287y9zH8s0v9fnxE3",2400),
+macr:D("1dfULmmuveHlnOXbaYmf3hmih8hB2Bgmm",2400),
+wb1:D("1aE_WUSLviHFrem2bBsD46vba6BQwxcfU",2000),
+wb2:D("1GMosmS7ot5l_mdJbRv_52Xqfa9WVg_JN",2000),
+wb3:D("1ruxJHeNCBqr2774qAEbdGoAfsXVSXsOs",2000),
+interro:D("1CNKYDtCP6gnuVfU2cRg2yqo-eSD_JjGB",2400),
+goebbels:D("1MafotzxwXr3C-MBrqBvXGl9H4pJzI-7G",2400),
+bormann:D("1yY6xF8ppLsaTocnC2v_R1RqKkbdmZgnM",2400),
+kladd1:D("1riR8CL8PogzMN1Cx1Y5KHCr-GTCmrhgU",2000),
+kladd2:D("1lxjatGqL4jxZAL5JRQQJa31DJxTIHheQ",2000),
+opel44:D("1M2ORKSYjyqlA8VsG7ACE2pX2DIqRB_80",2400),
+opeliwm:D("1slkW9Avb2XOzplSl7IRRBTviNa1fC7Kt",2000),
+opel45:D("1MSaJ15vYBwr2aC9mhLjbOLc28Ddfk5qK"),
+preuves:D("1O64_aCIY6L3KgE7PoOJiP9PO-ckBpyoG",2400),
+temoin:D("1tTwdK6cI4htGBF3eLv2TH1Cvap0U2mm7",2000),
+carte:D("1cCwUMI8iRH68h5UXU1UHTMlD4FpLnQCW",2400),
+proces:D("1zwNctwvXSERLqGABkW5BHUjwKZvjSwPr",2000)
+};
+
+const DOCS = {
+marche45: { img: IMG.marche45, titre: "La place du marché de Rüsselsheim pendant la reconstruction d'après-guerre", source: "Archives de Rüsselsheim", texte: null },
+dossier12: { img: IMG.dossier12, titre: "Extrait du dossier de l'affaire 12-1497 (US vs. Josef Hartgen) — preuves réunies par l'accusation", source: "NARA", texte: "« Le 28 juin 1945, six corps de soldats américains furent exhumés au cimetière de Rüsselsheim, en Allemagne. Ils étaient vêtus d'uniformes de l'Air Corps américain, et quatre portaient des plaques d'identité. Celles-ci portaient les noms de John N. Sekul, William A. Dumont, Thomas D. Williams et Elmore L. Austin. Tous les corps, sauf un, présentaient une fracture du crâne, blessures manifestement causées par des coups portés avec des instruments lourds et contondants. Celui dont le crâne n'était pas fracturé présentait deux blessures par balle dans le crâne. Deux autres présentaient des blessures par balle dans le crâne. Aucun autre os n'était fracturé. »" },
+tribunal: { img: IMG.tribunal, titre: "La commission du tribunal militaire américain, avec le juge président Brigadier General Garrison H. Davidson au centre", source: "Darmstadt, 27 juillet 1945 — NARA", texte: null },
+hanovre: { img: IMG.hanovre, titre: "Une photographie prise depuis 19 000 pieds lors d'un raid de la RAF sur Hanovre dans la nuit du 8 au 9 octobre 1943. Un Avro Lancaster peut être vu silhouetté contre les incendies en contrebas.", source: "IWM", texte: null },
+b24bomb: { img: IMG.b24bomb, titre: "Bombardiers américains B-24 larguant leurs bombes au-dessus de l'Allemagne, mars 1945", source: "IWM", texte: null },
+dresde: { img: IMG.dresde, titre: "Les ruines de Dresde", source: "Deutsche Fotothek", texte: null },
+equipage2: { images: [
+{ src: IMG.equipageNB, caption: "L'équipage du B-24 « Wham! Bam! Thank You Ma'm » (42-110107) du 491e Bombardment Group, 854e Bombardment Squadron : Norman Rogers Jr., 24 ans, pilote ; John Sekul, 22 ans, copilote ; Haigus Tufenkjian, 23 ans, navigateur-bombardier ; Forrest Brininstool, 28 ans, mécanicien de bord et mitrailleur de tourelle supérieure ; Thomas Williams Jr., 19 ans, opérateur radio ; William Adams, 19 ans, mitrailleur de nez ; William Dumont, 20 ans, mitrailleur ventral ; Elmore Austin, 19 ans, mitrailleur de flanc ; et Sidney Brown, 19 ans, mitrailleur de queue." },
+{ srcs: [IMG.wb1, IMG.wb2], caption: "Le « Wham! Bam! Thank You Ma'm » du 491e Bombardment Group sur la piste, en préparation au sol avant une mission (USAAF)." },
+{ src: IMG.wb3, caption: "Le « nose art » du bombardier B-24J 42-110107 : « Wham! Bam! Thank You Ma'm » (USAAF)." },
+{ src: IMG.moteur, caption: "Après avoir largué leurs bombes au-dessus de l'aérodrome de Langenhagen, le bombardier est touché par la défense antiaérienne allemande (Flak) au-dessus d'Osnabrück. Le système hydraulique tombe en panne, un moteur s'éteint et deux autres sont endommagés." },
+{ src: IMG.macr, caption: "Le rapport de disparition d'équipage n° 8296 (Missing Air Crew Report) dressé après la mission du 24 août 1944." },
+{ src: IMG.interro, caption: "Document d'interrogatoire du 491st Bomb Group (USAAF)." },
+], descriptif: true, titre: "L'équipage du « Wham! Bam! Thank You Ma'm » et sa disparition, 24 août 1944", source: "NARA", texte: "Le rapport de disparition d'équipage n° 8296 et les interrogatoires des autres membres du Bomb Group permettent de mieux comprendre le sort de l'équipage. Après que l'avion ait été touché, le pilote Norm s'est rendu compte qu'ils ne pourront pas retourner en Angleterre. L'avion a commencé à s'écraser. Il a alors donné l'ordre et l'équipage a sauté de l'avion. Neuf parachutes ont été vus." },
+andrieuGreven: { img: null, titre: "L'arrivée au sol des aviateurs", source: "D'après Claire Andrieu, Tombés du Ciel. Le sort des pilotes abattus en Europe, 1939-1945, p. 333-334, Tallandier, 2021", texte: "« Le 24 août 1944, l'équipage d'un bombardier américain de retour d'une mission sur Hanovre doit sauter en parachute. Le B-24 est gravement endommagé par un tir de la Flak. Les pilotes atterrissent sur le territoire de la commune de Greven, [...]. Arrivés au sol, deux hommes sont recueillis avec humanité par des fermiers. Un troisième, Eugene Brown, est immédiatement maltraité par une petite foule dans les champs. [...] Un par un, les neuf hommes sont conduits à la mairie. À l'intérieur, les aviateurs du rang sont battus jusqu'au sang par des civils. William Adams est ensuite interrogé brutalement par l'homme en uniforme qui semble diriger les opérations. Il en sort le visage ensanglanté. Deux membres de l'équipage sont « accusés » d'être juifs, le sergent Adams et l'officier navigateur Tufenkjian. Devant leurs dénégations, ceux qui les retiennent prisonniers obligent les neuf aviateurs à baisser pantalon et sous-vêtements pour les examiner. Ils sont enfin transférés à la base aérienne locale où la Luftwaffe les traite correctement. Le sergent Brininstool, qui avait été blessé par un tir de Flak, est soigné sommairement et envoyé à l'hôpital militaire de Münster. Le lendemain 25 août, les huit prisonniers de guerre sont convoyés en train en direction du centre de transit et d'interrogation de la Luftwaffe, à Oberursel près de Francfort. De là, ils doivent être dirigés vers un camp de prisonniers. »" },
+himmler: { img: null, epoque: true, titre: "Circulaire d'Himmler du 10 août 1943", source: "NARA", texte: "Le Reichsführer-SS — Quartier général, 10 août 1943\nRF/Bn — 48/16/43 g\nSecret\n\nIl n'est pas du devoir de la police d'intervenir dans les altercations entre les camarades du Volk et les aviateurs terroristes anglais et américains qui ont sauté en parachute.\n\nHimmler" },
+goebbelsArt: { img: IMG.goebbels, epoque: true, titre: "« Un mot sur la terreur aérienne ennemie », article de Joseph Goebbels, ministre de l'Éducation du peuple et de la Propagande", source: "Völkischer Beobachter, 26 mai 1944", texte: "Personne ne conteste plus aujourd'hui que le terrorisme aérien ennemi ne poursuit qu'un seul but : briser le moral de la population civile allemande. L'ennemi fait la guerre à ceux qui sont sans défense, avant tout des femmes et des enfants, pour forcer les hommes de notre pays à céder. [...] Personne ne s'étonnera que les populations touchées, connues dans le monde entier pour comprendre toutes les lois de la guerre, soient saisies d'une rage légitime devant des crimes aussi cyniques. C'est seulement grâce à l'intervention de la force armée qu'il a été possible de sauver des pilotes ennemis qui, autrement, auraient été battus à mort par la population locale. Qui a raison ici ? Les meurtriers qui après leurs lâches crimes attendent un traitement humain de la part de leurs victimes, ou les victimes qui souhaitent se défendre elles-mêmes selon le principe « œil pour l'œil, la dent pour la dent » ? La question n'est pas difficile à trancher. Dans tous les cas, ce serait trop nous demander que de nous faire utiliser des soldats allemands pour la défense d'assassins d'enfants contre des parents qui, saisis de fureur et de rage pour avoir perdu leurs trésors les plus chers à cause du cynisme brutal de l'ennemi, recourent à la légitime défense. [...] Il nous semble à peine possible, et à peine acceptable, de retourner la police et les soldats allemands contre le peuple allemand lorsque les meurtriers d'enfants recevront ce qu'ils méritent. Les crimes militaires anglo-américains doivent cesser à un moment ou un autre. [...]" },
+goebbelsJournal: { img: null, epoque: true, titre: "Journal de Joseph Goebbels, 10 juin 1944", source: null, texte: "Des lettres reçues, je conclus que mon article sur le « lynchage » des pilotes a reçu un accueil formidable. Le peuple allemand ne veut plus entendre parler d'esprit chevaleresque ou d'humanité dans la conduite de cette guerre dont dépend notre destin. Rarement l'un de mes articles aura produit autant d'effet que celui-ci. L'un dans l'autre, le peuple réclame que nous menions une guerre plus ferme et plus totale." },
+bormann: { img: IMG.bormann, epoque: true, titre: "Circulaire de Martin Bormann, chancelier du NSDAP, du 30 mai 1944", source: "NARA", texte: "Objet : Justice du peuple contre les assassins anglo-américains\n\nLes aviateurs anglais et nord-américains ont dans ces dernières semaines tiré à plusieurs reprises en volant en rase-mottes à basse altitude sur des aires de jeux pour enfants, sur des femmes et des enfants travaillant aux champs, sur les routes de campagne, sur des trains, etc., et ont ainsi assassiné des civils sans défense, en particulier des femmes et des enfants.\n\nIl est arrivé plusieurs fois que des équipages qui avaient sauté en parachute ou avaient été forcés d'atterrir aient été lynchés immédiatement et sur place par la population extrêmement indignée.\n\nCes camarades du Volk n'ont pas fait l'objet de poursuites policières et pénales.\n\nSigné M. Bormann" },
+kladd1: { img: IMG.kladd1, descriptif: true, titre: "« En avant, soldats chrétiens », dessin de presse de la propagande nazie", source: "Kladderadatsch, 18 juillet 1943", texte: "Ce dessin de presse offre un condensé des croyances nazies sur les bombardements alliés. Un clerc mi-anglican mi-juif au sens nazi « judéo-anglais » se réjouit alors qu'un aviateur noir aux apparences de singe bombarde une ville allemande." },
+kladd2: { img: IMG.kladd2, descriptif: true, titre: "Au « stand de tir », Eleanor Roosevelt déclare : « 3 lancers pour seulement 1 dollar, les garçons. Le meilleur entraînement pour les jeunes aviateurs terroristes ! »", source: "Kladderadatsch, 28 novembre 1943", texte: null },
+opel44: { img: IMG.opel44, titre: "Photographie aérienne d'un bombardement de l'usine Opel de Rüsselsheim, 1944", source: "NARA", texte: null },
+opeliwm: { img: IMG.opeliwm, titre: "Photographie aérienne verticale de reconnaissance de l'usine automobile Adam Opel de Rüsselsheim, endommagée par les bombardements alliés", source: "IWM", texte: null },
+opel45: { img: IMG.opel45, titre: "Une rue de Rüsselsheim le long de l'usine Opel en mars 1945", source: "Archives municipales de Rüsselsheim", texte: null },
+andrieuBomb: { img: null, titre: "Le bombardement de Rüsselsheim", source: "D'après Claire Andrieu, Tombés du Ciel, p. 334-335, Tallandier, 2021", texte: "Mais dans la nuit du 25 au 26, la RAF a bombardé le siège des usines Opel à Rüsselsheim, une petite ville à la fois industrielle et rurale, à une trentaine de kilomètres de Francfort. Les usines produisent pour la Luftwaffe des Junkers-88, des bombardiers qui combattent en première ligne. [...] Le bombardement de la nuit du 25 au 26 août a coupé la ligne de chemin de fer en amont. Au matin du 26, les huit Américains conduits par deux gardes de la Luftwaffe arrivent donc à pied à Rüsselsheim. Les soldats de l'escorte espèrent trouver là un train qui roule. Dans cette petite ville de 16 000 habitants, l'atmosphère est tendue. Après une nuit sans sommeil, les habitants sont debout, déblayant les débris, discutant des événements. C'est le dixième bombardement depuis le début de la guerre [...], et le troisième en cinq semaines. Le plus meurtrier aura été celui du 20 juillet 1944 (65 habitants de la ville tués, 157 Allemands au total). Le 26 août, on déplore 20 tués (21 Allemands au total en comptant un habitant d'un bourg voisin) et on constate le décès de 177 travailleurs forcés et prisonniers de guerre dont les baraques jouxtaient l'usine. [...] Au total, sur la durée de la guerre, 45 % des bâtiments de la ville ont été endommagés par les bombardements, de légèrement à totalement." },
+preuves: { img: IMG.preuves, epoque: true, titre: "Extraits du dossier de l'affaire 12-1497 (US vs. Josef Hartgen) — preuves réunies par l'accusation", source: "NARA", texte: "« Mme Margarete Witzler et sa sœur, Mme Käthe Reinhardt, virent les aviateurs et se mirent à crier : \"Mettez-les en pièces. Battez-les à mort. Ce sont eux, ce sont eux qui étaient là cette nuit. Ce sont les pilotes terroristes de cette nuit. Tuez ces chiens. Nous ne pouvons pas avoir pitié d'eux.\" »\n\n« Joseph Hartgen, un responsable du parti et chef de la propagande de Rüsselsheim, était présent dans la foule. À ce moment, il tira un coup de revolver. Les deux femmes continuèrent à crier, ramassèrent des pierres et les jetèrent sur les aviateurs [...]. Philipp Gutlich, qui se trouvait dans la foule, frappa les aviateurs avec un bâton qu'il tenait à deux mains plusieurs fois. »\n\n« Georg Daum, qui déblayait des décombres à l'arrière de sa maison dans la Taunusstrasse, accourut dans la rue derrière les aviateurs et les frappa avec sa pelle. »\n\n« Johannes Seipel s'approcha de lui et le frappa d'un coup de pied au cou et au menton. »\n\n« August Wolf se tenait sur un tas de bois derrière le mur, près des voies. Lui et Karl Fugmann jetèrent des pierres sur les aviateurs. Friedrich Wust se pencha par-dessus le mur et asséna à l'un des aviateurs un ou deux coups. Il frappa les Américains avec force plusieurs fois. »\n\n« Johann Opper excitait la foule et la « stimulait », et frappa lui-même les aviateurs plusieurs fois. Joseph Hartgen les frappa à plusieurs reprises. Il abattit ensuite les Américains d'un coup de feu ; ceux-ci gisaient alors, entassés contre le mur. »" },
+temoin: { img: IMG.temoin, titre: "Un témoin de l'accusation démontre des coups devant la cour martiale américaine", source: "Darmstadt, 25 juillet 1945", texte: null },
+andrieuLynch: { img: null, titre: "« Rüsselsheim, 26 août 1944 : un lynchage modèle »", source: "D'après Claire Andrieu, Tombés du Ciel, p. 334-335, Tallandier, 2021", texte: "Pénétrant dans la ville les uns derrière les autres et soutenant tour à tour Dumont qui a abîmé sa cheville en arrivant au sol, les aviateurs marchent dans la Mainzer Strasse, parallèle au Main qui coule d'est en ouest. Ils ne remarquent peut-être pas sur leur gauche la synagogue qui a été vandalisée par des habitants du lieu lors de la Nuit de Cristal. Elle n'a pas été complètement détruite, car des locataires « aryens » habitaient au-dessus. [...] Quelque 200 mètres plus loin, les prisonniers sous escorte arrivent sur la place du marché, encombrée de débris de bâtiments. L'église évangélique est debout, mais la place est couverte de poutres, de morceaux de briques et de tuiles. L'hostilité des habitants est visible. Ils se rassemblent autour des aviateurs. Pour aller à la gare, le petit convoi ne peut pas tourner à droite, directement dans la Marktstrasse, car elle n'est pas déblayée. Les hommes continuent vers l'est, dans la Frankfurterstrasse qui est en bon état. De plus en plus pressés par la petite foule, ils passent devant le commissariat de police. À gauche, juste derrière le rang de maisons, se trouve le vieux quartier juif de la ville. La « Maison des Juifs », Judenhaus, dans laquelle les derniers Juifs ont été concentrés avant leur déportation en 1942, est située là, à deux pas, sur la Schäfergasse. Au débouché de cette petite rue, à hauteur du 10, Frankfurterstrasse ou quelques mètres plus loin, des cris de femmes retentissent : « Battez-les à mort ! », « Tuez ces chiens ! », « Ce sont eux qui ont détruit nos maisons ! », « Ce sont les pilotes terroristes ! ». Deux sœurs lancent ces appels au meurtre, deux épouses et mères, âgées respectivement de 38 et 50 ans, propriétaires d'un petit tabac au 10 de la Frankfurterstrasse. Elles créent l'événement, au sens littéral. Tout en criant, Käthe Reinhardt, la cadette, lance une brique à la tête d'un aviateur. Le sang coule. L'agresseur poursuit à coups de poing. Sa sœur, Margarete Witzler, l'imite.\n\nLe lynchage commence donc sur la Frankfurterstrasse et se poursuit le long de la Taunusstrasse et de la Grabenstrasse, en direction de la gare. Josef Hartgen, contremaître chez Opel et chef local de la propagande du NSDAP, arrive sur les lieux et tire un coup de feu en l'air, ce qui accroît le tumulte. [...] Le lynchage se développe alors sans entrave, sur un trajet de quelques 800 mètres. Les gardes laissent faire. Un policier présent laisse faire. Un instituteur local en retraite, Christophe Keil, demande à ces représentants de l'armée et de la police de s'interposer, en vain. Les aviateurs franchissent cette distance en trois quarts d'heure ou plus, entourés d'une foule hurlante qui leur lance des briques, et leur donne des coups de pelle et de pierres, d'outils agricoles. Face aux cris de « Juif ! Juif ! » (Jude ! Jude !), William Adams tente de nouveau de convaincre qu'il n'est pas juif. En raison de ses origines hollandaises de Pennsylvanie, il parle un peu d'allemand. Ce n'est pas le cas de Haigus Tufenkjian, qui ne comprend pas. À mi-chemin dans la Taunusstrasse, un aviateur en sang, un morceau de tuile fiché dans le crâne, tombe assis. Un fermier âgé de 67 ans l'achève à coups de pied dans la gorge et au menton.\n\nLa taille de la foule augmenta, jusqu'à atteindre peut-être 200 personnes. [...] Un à un les aviateurs encore debout s'effondrent. Eugene Brown dira dans son témoignage : « Je suis tombé peu après et j'ai fait l'opossum [fait le mort comme le fait l'opossum]. Ils ont dû penser que j'étais mort car j'étais couvert de sang à cause des coups que j'avais reçus sur la tête. » Un maréchal-ferrant de 47 ans cogna plusieurs aviateurs à terre avec son marteau. Des participants menacent Christoph Keil : « Dégage ou ce sera ton tour », lui crie un cheminot. Après avoir battu les aviateurs et incité la foule à l'imiter, le chef de la propagande locale vide son chargeur dans la tête de quatre des hommes tombés. La foule se disperse. Plusieurs participants rentrent chez eux. En chemin, ils expriment leur contentement aux passants. Un aubergiste-fermier se plaint d'avoir mal aux mains d'avoir tant frappé avec son bâton.\n\nPlus tard dans la matinée, des enfants âgés de 8 à 12 ans, dont certains en uniforme de la Hitlerjugend, chargent les corps des aviateurs sur une charrette. En uniforme de SA, un participant du lynchage, charpentier de son état, les dirige. Des enfants avaient d'ailleurs participé activement au lynchage. Ils poussent maintenant joyeusement la charrette jusqu'au cimetière. Ils arrivent sur la place centrale de celui-ci lorsqu'une alerte aérienne disperse le groupe. Dans la charrette, quatre hommes au moins vivent encore. Le SA monte sur le véhicule et cogne à nouveau, après quoi seuls deux aviateurs demeurent conscients, Eugene Brown et William Adams. Mettant à profit l'alerte, ils se glissent dans la chapelle attenante, puis s'échappent dans la campagne. Ils seront repris quelques jours plus tard et envoyés en camp de prisonniers. Au cimetière de Rüsselsheim, Hartgen, le contremaître chef de la propagande locale, revient dans l'après-midi et tire des coups de feu. Aucun des aviateurs ne survit à ce dernier geste. Des prisonniers russes sont requis pour creuser une fosse. L'endroit choisi est celui de l'ancien carré juif du cimetière, profané et désaffecté depuis la Nuit de Cristal. Les six corps sont jetés à même la terre. Le pilote Norman J. Rogers Jr., le copilote John R. Sekul, le navigateur Haigus Tufenkjian, l'opérateur radio Thomas D. Williams Jr., le mitrailleur ventral William A. Dumont et le mitrailleur latéral gauche Elmore L. Austin ont perdu la vie. [...]" },
+carte: { img: IMG.carte, titre: "Un chemin de lynchage : Rüsselsheim-am-Main (26 août 1944)", source: "Extrait de Claire Andrieu, Tombés du Ciel, Tallandier, 2021 — © FNSP Sciences Po, Atelier de cartographie, 2020", texte: null },
+proces: { img: IMG.proces, titre: "Le procès à Darmstadt, juillet 1945 — les accusés sont assis à droite", source: null, texte: null },
+geneve: { img: null, epoque: true, titre: "Article 2 de la Convention de Genève de 1929, ratifié par l'Allemagne en 1934", source: null, texte: "Les prisonniers de guerre sont au pouvoir de la Puissance ennemie, mais non des individus ou des corps de troupe qui les ont capturés. Ils doivent être traités en tout temps avec humanité et être protégés notamment contre les actes de violence, les insultes et la curiosité publique. Les mesures de représailles à leur égard sont interdites." },
+exhumation: { img: null, epoque: true, titre: "Rapport d'exhumation du 28 juin 1945", source: "War Crimes Commission, Darmstadt", texte: "« Le 28 juin 1945, six corps de soldats américains furent exhumés au cimetière de Rüsselsheim, en Allemagne. Ils étaient vêtus d'uniformes de l'Air Corps américain, et quatre portaient des plaques d'identité. Celles-ci portaient les noms de John N. Sekul, William A. Dumont, Thomas D. Williams et Elmore L. Austin. Tous les corps, sauf un, présentaient une fracture du crâne, blessures manifestement causées par des coups portés avec des instruments lourds et contondants. Celui dont le crâne n'était pas fracturé présentait deux blessures par balle dans le crâne. Deux autres présentaient des blessures par balle dans le crâne. Aucun autre os n'était fracturé. »" },
+};
+
+
+const ETAPES = [
+{
+id: 0,
+titre: "Rüsselsheim 1945, des corps retrouvés et l'ouverture d'une enquête",
+sous: "Dossier ouvert. Affaire n° 12-1497.",
+narrative: "En mai 1945, la guerre est finie à Rüsselsheim. La 3e armée américaine a pris la ville. Des travailleurs forcés français et polonais informent les officiers que des habitants de Rüsselsheim auraient assassiné en août 1944 huit aviateurs canadiens. En juin, une commission militaire à Darmstadt nouvellement créée pour les crimes de guerre au sein de l'armée américaine ouvre une enquête. Le 28 juin, six corps sont exhumés et quatre d'entre eux sont identifiés. Ces aviateurs tués n'étaient pas Canadiens, mais Américains.\n\nBienvenue au bureau du procureur des crimes de guerre, Darmstadt, 1945. Tu es enquêteur. Ton travail : lire les pièces du dossier, analyser les sources et répondre aux questions du procureur.",
+docs: ["exhumation"],
+qcm: [
+{ q: "Indique, d'après le dossier, qui occupe Rüsselsheim en 1945.", options: ["Les soviétiques de l'Armée rouge", "L'armée américaine", "Les troupes françaises", "Les soldats britanniques"], ok: 1 },
+{ q: "Explique pourquoi une commission militaire est créée.", options: ["Pour juger des soldats américains déserteurs", "Pour enquêter sur les crimes de guerre commis en Allemagne", "Pour organiser la reconstruction de la ville", "Pour négocier la paix avec les Alliés"], ok: 1 },
+{ q: "D'après le rapport d'exhumation, indique ce qui montre que les soldats ont subi un sort violent.", options: ["Leurs uniformes étaient déchirés", "Ils portaient des plaques d'identité.", "Ils présentaient des fractures causées par des coups lourds et contondants, et plusieurs blessures par balle.", "Ils ont été enterrés dans un cimetière."], ok: 2 },
+],
+ouvertes: [],
+},
+{
+id: 1,
+titre: "Le ciel en feu, guerre aérienne et bombardements au-dessus de l'Allemagne",
+sous: "Comprendre ce que subissent les populations civiles allemandes.",
+narrative: "La Seconde Guerre mondiale est marquée par d'importants bombardements stratégiques (Londres, Tokyo…). L'Allemagne devient au cours de la guerre la cible de bombardements massifs visant notamment le moral de la population.",
+docs: ["hanovre", "b24bomb", "dresde"],
+captions: { hanovre: "Un raid de la RAF sur Hanovre, dans la nuit du 8 au 9 octobre 1943 : de nuit, les bombardements britanniques sont plus discrets, mais aussi plus imprécis que les raids américains de jour.", dresde: "Dresde, février 1945 : les bombardements alliés détruisent massivement les villes et l'industrie allemandes. Ici, la tempête de feu a rasé le centre historique, faisant environ 25 000 victimes civiles." },
+qcm: [],
+association: {
+titre: "Relie chaque stratégie de bombardement à sa description",
+q: "Clique sur une stratégie, puis sur la description qui lui correspond. Un même fait ne peut servir qu'une fois.",
+acts: [1, 0],
+paires: [
+{ nom: "La stratégie américaine", acte: "Bombarder de jour pour viser précisément les cibles industrielles et militaires." },
+{ nom: "La stratégie britannique", acte: "Bombarder de nuit, pour être discret, mais plus imprécis, et pour briser le moral de la population." },
+],
+},
+trous: {
+consigne: "Complète le texte à trous avec les mots manquants.",
+morceaux: [
+"Les bombardements alliés sur l'Allemagne nazie ont pour conséquence la destruction massive des ",
+" et des ",
+". Ces bombardements font de très nombreuses ",
+" civiles et affaiblissent le ",
+" de la population."
+],
+trous: ["villes", "usines", "victimes", "moral"],
+opts: [
+["villages", "villes", "monuments"],
+["usines", "écoles", "champs"],
+["soldats", "prisonniers", "victimes"],
+["moral", "économie", "armée"]
+],
+},
+ouvertes: [],
+},
+{
+id: 2,
+titre: "Neuf hommes tombés du ciel",
+sous: "Le contexte de la disparition des aviateurs du « Wham! Bam! Thank You Ma'm ».",
+narrative: "Le 24 août 1944, l'équipage d'un bombardier est réveillé à 2h30 du matin, la nuit. Il pleut beaucoup. Après un petit-déjeuner rapide, l'équipage se rend à un briefing où il apprend aujourd'hui l'objectif de sa mission : ils vont bombarder un aérodrome à Langenhagen, près de Hanovre. La pluie diminue et l'équipage monte à bord — pour beaucoup, c'est leur première mission.",
+docs: ["equipage2", "andrieuGreven"],
+qcm: [
+{ q: "Indique, d'après les pièces du dossier, quelle était la mission du 491e Bombardment Group et du bombardier « Wham! Bam! Thank You Ma'm » le 24 août 1944.", options: ["Bombarder Dresde et Berlin.", "Larguer des bombes sur l'aérodrome de Langenhagen, près de Hanovre", "Photographier les usines Opel de Rüsselsheim.", "Larguer des tracts de propagande sur Hanovre."], ok: 1 },
+{ q: "Décris comment se déroule l'arrivée au sol des aviateurs en Allemagne.", options: ["Tous sont immédiatement remis à la Luftwaffe et traités en prisonniers de guerre.", "Ils sont recueillis avec humanité par la population allemande qui les aide à quitter l'Allemagne.", "Certains sont maltraités et battus par des civils, deux sont « accusés » d'être juifs et examinés de force.", "Ils sont arrêtés par la police qui décide de les exécuter sommairement."], ok: 2 },
+],
+ouvertes: [],
+},
+{
+id: 3,
+titre: "Les politiques et la propagande du régime nazi face aux aviateurs alliés",
+sous: "Comment le régime rend possibles — et encourage — les violences contre les aviateurs abattus.",
+narrative: "Pour comprendre le sort des aviateurs une fois au sol, il faut s'intéresser aux politiques et à la propagande du régime nazi vis-à-vis des pilotes alliés. L'examen de circulaires secrètes, d'articles de presse et de dessins de propagande du régime pourront sans doute éclairer l'enquête.",
+docs: ["himmler", "kladd1", "kladd2", "goebbelsArt", "goebbelsJournal", "bormann"],
+qcm: [
+{ q: "D'après le journal de Goebbels, indique comment les Allemands réagissent-ils à ces discours.", options: ["Avec indifférence", "Avec un « accueil formidable » : le peuple ne veut plus entendre parler d'humanité et réclame une guerre plus ferme et plus totale", "Avec hostilité envers le régime", "En demandant des procès équitables pour les pilotes"], ok: 1 },
+],
+surlignages: [
+{
+doc: "himmler",
+titre: "Circulaire d'Himmler, 10 août 1943",
+consigne: "Surligne le passage qui montre que la police ne doit pas protéger les aviateurs alliés tombés en parachute. Clique sur les segments à retenir, puis vérifie.",
+segments: ["Le Reichsführer-SS — Quartier général, 10 août 1943 — Secret", "Il n'est pas du devoir de la police d'intervenir", "dans les altercations entre les camarades du Volk", "et les aviateurs terroristes anglais et américains", "qui ont sauté en parachute."],
+ok: [1, 2, 3, 4],
+},
+{
+doc: "bormann",
+titre: "Circulaire de Bormann, 30 mai 1944",
+consigne: "Surligne dans le passage ce qui montre que le régime nazi ne condamne pas les lynchages des Allemands contre les aviateurs alliés. Clique sur le segment à retenir, puis vérifie.",
+segments: ["Il est arrivé plusieurs fois que des équipages qui avaient sauté en parachute ou avaient été forcés d'atterrir", "aient été lynchés immédiatement et sur place par la population extrêmement indignée.", "Ces camarades du Volk n'ont pas fait l'objet de poursuites policières et pénales."],
+ok: [2],
+},
+],
+hotspots: [
+{
+doc: "kladd1",
+titre: "« En avant, soldats chrétiens »",
+consigne: "Examine ce dessin : clique sur chaque repère pour découvrir ce qu'il montre.",
+zones: [
+{ x: 26, y: 42, label: "Le clerc", texte: "Un clerc à l'apparence mi-anglicane, mi-juive au sens nazi (« judéo-anglais »), au visage menaçant : la propagande présente les bombardements alliés comme un complot « judéo-chrétien »." },
+{ x: 70, y: 32, label: "L'aviateur", texte: "Un aviateur allié dessiné avec des traits de singe : le racisme déshumanise l'ennemi et le présente comme un être sauvage, digne d'être châtié." },
+{ x: 50, y: 86, label: "La ville allemande", texte: "Au sol, une ville allemande bombardée et en flammes : le dessin montre que les aviateurs alliés visent les villes, donc la population civile, et détruisent également le patrimoine allemand. La propagande justifie ainsi la colère et la vengeance contre ces « assassins d'enfants »." },
+],
+},
+{
+doc: "kladd2",
+titre: "Au « stand de tir »",
+consigne: "Examine ce dessin : clique sur chaque repère pour découvrir ce qu'il montre.",
+zones: [
+{ x: 82, y: 45, label: "Eleanor Roosevelt", texte: "L'épouse du président américain, caricaturée en foraine vulgaire qui vend les lancers : les États-Unis feraient de la guerre un commerce et un divertissement." },
+{ x: 45, y: 38, label: "Les cibles", texte: "Les cibles du stand : la propagande accuse les aviateurs alliés de viser délibérément les civils, les femmes et les enfants — et accuse aussi les Américains de viser les églises — comme à une fête foraine." },
+{ x: 15, y: 50, label: "Le lanceur", texte: "Un visiteur qui s'entraîne à lancer — l'un des lanceurs est représenté comme un homme noir avec des traits de singe, pour déshumaniser l'ennemi : « le meilleur entraînement pour les jeunes aviateurs terroristes ! » Le meurtre de civils serait un jeu pour les Alliés." },
+],
+},
+],
+ouvertes: [
+{ q: "Relève les différents termes ou images employés dans les discours et la propagande nazis pour qualifier les aviateurs alliés.", min: 1, fmt: "c" },
+],
+},
+{
+id: 4,
+titre: "Rüsselsheim sous les bombes, une nuit de destructions",
+sous: "Le contexte local : pourquoi la ville est à cran le 26 août 1944.",
+narrative: "Pour comprendre le destin des huit aviateurs américains faits prisonniers, il est essentiel de saisir le contexte dans lequel ils sont entrés dans la ville de Rüsselsheim, et notamment de s'intéresser à la nuit du 25 au 26 août 1944.",
+docs: ["opel44", "opeliwm", "opel45", "andrieuBomb"],
+qcm: [
+{ q: "Indique ce qui s'est passé à Rüsselsheim dans la nuit du 25 au 26 août 1944.", options: ["La ville est libérée par les Américains et les Britanniques.", "La ville est bombardée par les Britanniques.", "La ville est bombardée par les Américains.", "Des Juifs sont raflés et déportés."], ok: 1 },
+{ q: "Explique pourquoi les Américains doivent traverser Rüsselsheim à pied.", options: ["La ligne de chemin de fer a été coupée à cause du bombardement et l'escorte espère trouver en ville un train qui roule encore.", "Les aviateurs se sont échappés de leur camp de prisonniers et tentent de fuir en restant cachés.", "La Wehrmacht leur a ordonné de marcher de force jusqu'à leur camp de prisonniers à Francfort.", "Leur convoi ferroviaire a été attaqué et détruit par un raid aérien allié."], ok: 0 },
+],
+ouvertes: [
+{ q: "Indique pourquoi la ville de Rüsselsheim est la cible de plusieurs bombardements au cours de la guerre, et notamment la nuit du 25 au 26 août 1944.", min: 1, fmt: "c" },
+],
+},
+{
+id: 5,
+titre: "Rüsselsheim, 26 août 1944 : un lynchage modèle",
+sous: "Reconstituer le cheminement du crime, événement par événement.",
+narrative: "Les preuves sont réunies. Le procureur te charge de reconstituer la chronologie des faits, du 24 au 26 août 1944, à l'aide du dossier de l'affaire 12-1497, du récit de l'historienne Claire Andrieu et de la carte du chemin du lynchage.",
+docs: ["preuves", "temoin", "andrieuLynch", "carte"],
+qcm: [],
+frise: {
+q: "Question de chronologie : replace les événements dans l'ordre, du 24 au 26 août 1944. Clique sur les événements dans le bon ordre.",
+evenements: [
+"L'équipage du bombardier est touché par un tir de la défense anti-aérienne et saute en parachute au nord de Hanovre ; les aviateurs atterrissent à Greven (24 août).",
+"La RAF bombarde l'usine Opel de Rüsselsheim pendant 59 minutes, dans la nuit du 25 au 26 août.",
+"Les aviateurs alliés arrivent à Rüsselsheim et doivent traverser la ville à pied, escortés par des soldats, entre 9h et 10h le 26 août 1944.",
+"De 10h à 11h le 26 août, le lynchage a lieu, par une foule d'environ 200 personnes.",
+"De 11h à 12h, les corps sont chargés sur une charrette et poussés par des enfants des jeunesses hitlériennes vers le cimetière juif profané ; les sergents Brown et Adams parviennent à s'enfuir.",
+"L'après-midi du 26 août 1944, Hartgen revient au cimetière et achève les aviateurs.",
+],
+ordre: [0, 1, 2, 3, 4, 5],
+dates: ["24 août 1944", "Nuit du 25 au 26 août", "26 août, 9h–10h", "26 août, 10h–11h", "26 août, 11h–12h", "26 août, l'après-midi"],
+},
+association: {
+q: "Identifie les auteurs des violences et leurs actes : clique sur un personnage, puis sur le fait qui correspond. Un même fait ne peut servir qu'une fois.",
+paires: [
+{ nom: "Margarete Witzler et Käthe Reinhardt", acte: "Crient « Battez-les à mort ! » « Tuez ces chiens ! » et lancent pierres et coups de poing" },
+{ nom: "Josef Hartgen", acte: "Tire un coup de revolver en l'air, frappe les aviateurs puis les abat d'un coup de feu" },
+{ nom: "Philipp Gutlich", acte: "Frappe les aviateurs avec un bâton tenu à deux mains" },
+{ nom: "Georg Daum", acte: "Accourt derrière les aviateurs et les frappe avec sa pelle" },
+{ nom: "Johannes Seipel", acte: "Achève un aviateur tombé à coups de pied dans la gorge et au menton" },
+{ nom: "Johann Opper", acte: "Excite et « stimule » la foule, et frappe lui-même les aviateurs" },
+{ nom: "August Wolf et Karl Fugmann", acte: "Jetèrent des pierres sur les aviateurs depuis un tas de bois, derrière le mur près des voies" },
+{ nom: "Friedrich Wust", acte: "Se pencha par-dessus le mur et asséna à l'un des aviateurs un ou deux coups, frappant les Américains avec force plusieurs fois" },
+],
+},
+ouvertes: [],
+},
+{
+id: 6,
+titre: "L'heure du procès, juger les crimes de guerre",
+sous: "Darmstadt, juillet 1945. La justice militaire américaine juge les accusés.",
+narrative: "Les accusés comparaissent devant la cour martiale américaine. Face à eux, un texte : la Convention de Genève de 1929, que l'Allemagne a ratifiée en 1934. À toi, enquêteur, de trancher.",
+docs: ["proces", "geneve"],
+surlignages: [
+{
+doc: "geneve",
+titre: "Convention de Genève, 1929",
+consigne: "Surligne dans le document le passage qui indique comment doivent être traités les prisonniers de guerre. Clique sur le segment à retenir, puis vérifie.",
+segments: ["Les prisonniers de guerre sont au pouvoir de la Puissance ennemie, mais non des individus ou des corps de troupe qui les ont capturés.", "Ils doivent être traités en tout temps avec humanité et être protégés notamment contre les actes de violence, les insultes et la curiosité publique.", "Les mesures de représailles à leur égard sont interdites."],
+ok: [1],
+},
+],
+qcm: [
+{ q: "Qualifie le meurtre de prisonniers protégés par la Convention de Genève de 1929.", options: ["Un acte de légitime défense", "Un simple crime de droit commun", "Un crime de guerre", "Un incident de guerre sans qualification juridique"], ok: 2 },
+],
+ouvertes: [],
+},
+{
+id: 7,
+titre: "L'audience — la défense contre-attaque",
+sous: "Darmstadt, juillet 1945. La parole est à la défense.",
+narrative: "Le procès s'ouvre à Darmstadt devant la commission militaire américaine. Onze habitants de Rüsselsheim comparaissent sur le banc des accusés. Après l'exposé des charges, c'est à la défense de parler : l'avocat des accusés cherche à semer le doute, retourne le contexte et tord les preuves.\n\nÀ chaque objection de la défense, réponds en désignant LA pièce du dossier qui la réfute. Garde ton livret ouvert : chaque pièce y est rappelée. Le dossier, lui, ne ment pas.",
+docs: [],
+qcm: [],
+ouvertes: [],
+audience: {
+consigne: "À chaque objection de la défense, choisis la pièce du dossier qui la réfute. Une seule pièce est décisive.",
+objections: [
+{
+arg: "Le 25 août au soir, les bombes britanniques ont détruit nos maisons et tué nos proches. Mes clients ont perdu cette nuit-là ce qu'ils avaient de plus cher. Le lendemain matin, ils n'ont pas tué : ils ont pleuré leurs morts. Peut-on condamner un mouvement de douleur ?",
+options: ["opel44","andrieuBomb","hanovre","geneve"],
+ok: 3,
+exp: "La Convention de Genève de 1929, ratifiée par l'Allemagne en 1934, exige que les prisonniers soient protégés « en tout temps » contre les actes de violence, et interdit toute mesure de représailles à leur égard. La douleur, si réelle soit-elle, ne suspend pas la loi. Les pièces n° 13 et n° 16 expliquent la colère des habitants : aucune ne l'excuse juridiquement."
+},
+{
+arg: "Regardez ces hommes : la propagande elle-même les appelait des « terroristes de l'air », des assassins de femmes et d'enfants. Ce ne sont pas des soldats protégés par les conventions : ce sont des criminels tombés du ciel.",
+options: ["kladd2","bormann","equipage2","goebbelsArt"],
+ok: 2,
+exp: "La pièce n° 5 présente l'équipage du B-24 « Wham! Bam! Thank You Ma'm » du 491e Bombardment Group : des soldats américains identifiés, en uniforme, membres d'une armée régulière. Tombés aux mains de l'ennemi, ils sont des prisonniers de guerre au sens de la Convention de Genève. Les dessins et circulaires (pièces n° 8 à 12) ne sont pas des preuves : ce sont les outils de la propagande qui déshumanisait les aviateurs."
+},
+{
+arg: "Il y avait ce matin-là deux cents personnes dans les rues, monsieur le président. Deux cents ! Dans la peur et la confusion, qui peut dire qui a fait quoi ? On ne juge pas une foule tout entière.",
+options: ["proces","opel45","carte","temoin"],
+ok: 3,
+exp: "Devant la cour, un témoin de l'accusation démontre les coups qui ont été portés (pièce n° 18), et le dossier de l'affaire (pièce n° 17) désigne nommément qui a crié, frappé, tiré ou achevé les aviateurs. Chacun des onze accusés comparaît pour des actes précis, établis par des témoins : la foule n'efface pas les responsabilités individuelles."
+},
+{
+arg: "La guerre fait des morts, monsieur le président. Ces aviateurs sont morts de balles, au cours d'un transfert, dans une ville en ruine. C'est la guerre qui les a tués, pas mes clients.",
+options: ["dresde","exhumation","b24bomb","andrieuBomb"],
+ok: 1,
+exp: "Le rapport d'exhumation établit que cinq des six corps présentent une fracture du crâne « causée par des coups portés avec des instruments lourds et contondants », et que plusieurs portent en outre des blessures par balle. Ces traces sont celles d'un lynchage (coups, pierres, bâtons, pelles), pas celles d'une mort ordinaire de la guerre. La pièce n° 19 confirme le déroulé de cette matinée."
+},
+],
+},
+},
+{
+id: 8,
+final: true,
+titre: "Épilogue — le verdict et la mémoire",
+sous: "Darmstadt, 2 août 1945. Et la mémoire, bien des décennies après.",
+narrative: "Ton enquête est close et tes conclusions sont versées au dossier. Voici ce qu'il est advenu de « ton » affaire — et ce dont Rüsselsheim se souvient aujourd'hui.",
+docs: [],
+qcm: [],
+ouvertes: [],
+},
+];
+
+"use strict";
+// ================= état =================
+var LS_KEY="russelsheim-site-v1";
+var state={step:0,teacher:false,answers:{},validated:{},showQcm:{},sfxOn:true,musicOn:false,musicFail:false,vol:0.4};
+var ui={tabs:{},hz:{},picked:{},zoomSrc:null,zoomAlt:""};
+try{ var _raw=localStorage.getItem(LS_KEY); if(_raw){ var _d=JSON.parse(_raw); if(_d&&_d.answers)state.answers=_d.answers; if(_d&&_d.validated)state.validated=_d.validated; if(_d&&_d.showQcm)state.showQcm=_d.showQcm; if(_d&&typeof _d.vol==="number")state.vol=Math.min(1,Math.max(0,_d.vol)); } }catch(e){}
+var _saveT=null;
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify({answers:state.answers,validated:state.validated,showQcm:state.showQcm,vol:state.vol})); }catch(e){} }
+function saveDeb(){ if(_saveT)clearTimeout(_saveT); _saveT=setTimeout(save,300); }
+function setA(k,v){ state.answers[k]=v; saveDeb(); render(); }
+function setAQ(k,v){ state.answers[k]=v; saveDeb(); }
+
+var PIECES=[]; ETAPES.forEach(function(e){ e.docs.forEach(function(k){ PIECES.push({k:k,step:e.id}); }); });
+var PNUM={}; PIECES.forEach(function(p,i){ if(!(p.k in PNUM)) PNUM[p.k]=i+1; });
+var QNUM={}, _qn=0;
+ETAPES.forEach(function(e){
+ (e.surlignages||[]).forEach(function(s,i){ QNUM[e.id+"-surl-"+i]=++_qn; });
+ e.qcm.forEach(function(q,i){ QNUM[e.id+"-qcm-"+i]=++_qn; });
+ if(e.association){ QNUM[e.id+"-assoc-0"]=++_qn; }
+ if(e.trous){ QNUM[e.id+"-trou-0"]=++_qn; }
+ if(e.frise){ QNUM[e.id+"-frise-0"]=++_qn; }
+ e.ouvertes.forEach(function(o,i){ QNUM[e.id+"-open-"+i]=++_qn; });
+ if(e.audience){ e.audience.objections.forEach(function(o,i){ QNUM[e.id+"-aud-"+i]=++_qn; }); }
+});
+var LABELS=["Introduction","Partie I","Partie II","Partie III","Partie IV","Partie V","Partie VI","L'audience","Épilogue"];
+var ROMAINS=["Intro","I","II","III","IV","V","VI","Aud","Fin"];
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function paras(t){ return String(t||"").split(/\n{2,}/); }
+function aKey(t,s,i){ return t+"-"+s+"-"+i; }
+function txp(t){ return paras(t).map(function(p){ return "<p>"+esc(p).replace(/\n/g,"<br>")+"</p>"; }).join(""); }
+function unlockedUpTo(){ var m=0; for(var i=0;i<ETAPES.length;i++){ if(state.validated[i]) m=i; } if(m<ETAPES.length-1&&ETAPES[m+1].final&&state.validated[m]) m=m+1; return state.teacher?ETAPES.length-1:m; }
+var PARTIES=ETAPES.filter(function(e){ return !e.final; }).length;
+function progress(){ return Math.round(Object.keys(state.validated).length/PARTIES*100); }
+function scoreQcm(){ var s=0; ETAPES.forEach(function(e){ e.qcm.forEach(function(q,i){ if(state.answers[aKey("qcm",e.id,i)]===q.ok) s++; }); }); return s; }
+function totalQcm(){ return ETAPES.reduce(function(t,e){ return t+e.qcm.length; },0); }
+
+// ================= sons =================
+var actx=null;
+function AC(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } } if(actx&&actx.state==="suspended"){ actx.resume(); } return actx; }
+function sfxPaper(){ if(!state.sfxOn) return; var ctx=AC(); if(!ctx) return; var dur=0.3, n=Math.floor(ctx.sampleRate*dur);
+ var buf=ctx.createBuffer(1,n,ctx.sampleRate), dd=buf.getChannelData(0);
+ for(var i=0;i<n;i++){ var t=i/n; dd[i]=(Math.random()*2-1)*Math.pow(1-t,1.5)*(0.65+0.35*Math.sin(t*38)); }
+ var src=ctx.createBufferSource(); src.buffer=buf;
+ var hp=ctx.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=1300;
+ var pk=ctx.createBiquadFilter(); pk.type="peaking"; pk.frequency.value=3900; pk.Q.value=0.7; pk.gain.value=6;
+ var g=ctx.createGain(); var t0=ctx.currentTime;
+ g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(0.32,t0+0.04); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+ src.connect(hp); hp.connect(pk); pk.connect(g); g.connect(ctx.destination); src.start(); }
+function sfxStamp(){ if(!state.sfxOn) return; var ctx=AC(); if(!ctx) return; var o=ctx.createOscillator(), g=ctx.createGain(); var t0=ctx.currentTime;
+ o.type="sine"; o.frequency.setValueAtTime(170,t0); o.frequency.exponentialRampToValueAtTime(65,t0+0.12);
+ g.gain.setValueAtTime(0.001,t0); g.gain.exponentialRampToValueAtTime(0.4,t0+0.015); g.gain.exponentialRampToValueAtTime(0.001,t0+0.2);
+ o.connect(g); g.connect(ctx.destination); o.start(t0); o.stop(t0+0.22); }
+var musicEl=null, musicErrs=0;
+function failMusic(){ state.musicOn=false; state.musicFail=true; render(); }
+function ensureMusic(){ if(!musicEl){ musicEl=document.createElement("audio"); musicEl.loop=true; musicEl.volume=Math.min(1,Math.max(0,state.vol||0.4));
+ ["musique.mp3","musique.mp3.mp3","musique.MP3"].forEach(function(s){ var o=document.createElement("source"); o.src=s; musicEl.appendChild(o); });
+ musicEl.addEventListener("error",function(){ musicErrs++; if(musicErrs>=3&&musicEl.paused){ failMusic(); } },true);
+ musicEl.onplaying=function(){ state.musicOn=true; state.musicFail=false; musicErrs=0; render(); };
+ document.body.appendChild(musicEl);
+ var mp=document.getElementById("musicpick"); if(mp){ mp.addEventListener("change",function(){ var f=mp.files&&mp.files[0]; if(!f)return; musicErrs=0; musicEl.src=URL.createObjectURL(f); state.musicFail=false; state.musicOn=true; musicEl.play().catch(function(){}); render(); }); } }
+ return musicEl; }
+
+// ================= logique =================
+function canValidate(){
+ var et=ETAPES[state.step], sid=et.id;
+ if(state.validated[sid]) return false;
+ if(sid===0 && !String(state.answers["enqueteur"]||"").trim()) return false;
+ if(sid===0 && !state.answers["lettreOuverte"]) return false;
+ for(var i=0;i<et.qcm.length;i++){ if(state.answers[aKey("qcm",sid,i)]===undefined) return false; }
+ if(et.surlignages){ for(var s=0;s<et.surlignages.length;s++){ if(state.answers[aKey("surlState",sid,s)]!=="ok") return false; } }
+ if(et.trous){ if(state.answers[aKey("trouState",sid,0)]!=="ok") return false; }
+ if(et.hotspots){ for(var hh=0;hh<et.hotspots.length;hh++){ var v=state.answers[aKey("hs",sid,hh)]||[]; if(v.length<et.hotspots[hh].zones.length) return false; } }
+ if(et.association){ var sel=state.answers[aKey("assoc",sid,0)]||{}; if(Object.keys(sel).length<et.association.paires.length) return false; }
+ if(et.frise){ var p=state.answers[aKey("frise",sid,0)]||[]; if(p.length!==et.frise.evenements.length) return false; }
+ for(var o=0;o<et.ouvertes.length;o++){ if(!String(state.answers[aKey("open",sid,o)]||"").trim()) return false; }
+ if(et.audience){ for(var a2=0;a2<et.audience.objections.length;a2++){ if(state.answers[aKey("aud",sid,a2)]===undefined) return false; } }
+ return true;
+}
+function validateStep(){
+ var et=ETAPES[state.step], sid=et.id;
+ if(et.frise){ var p=state.answers[aKey("frise",sid,0)]||[];
+  var ok=p.length===et.frise.evenements.length && p.every(function(v,i){ return v===et.frise.ordre[i]; });
+  state.answers[aKey("friseState",sid,0)]=ok?"ok":"ko"; if(!ok){ saveDeb(); render(); return; } }
+ if(et.association){ var sel=state.answers[aKey("assoc",sid,0)]||{};
+  var ok2=et.association.paires.every(function(pp,i){ return sel[i]===i; });
+  state.answers[aKey("assocState",sid,0)]=ok2?"ok":"ko"; if(!ok2){ saveDeb(); render(); return; } }
+ state.showQcm[sid]=true; state.validated[sid]=true; sfxStamp(); save(); render();
+}
+function buildReport(){
+ var L=["ENQUÊTE RÜSSELSHEIM 1944 — RAPPORT D'ENQUÊTE","Enquêteur : "+(String(state.answers["enqueteur"]||"").trim()||"(non renseigné)"),""];
+ ETAPES.forEach(function(e){
+  if(e.final) return;
+  L.push("=== "+e.titre+" ===");
+  if(e.surlignages){ e.surlignages.forEach(function(it,i){ var sel=state.answers[aKey("surl",e.id,i)]||[]; var st=state.answers[aKey("surlState",e.id,i)];
+   L.push("Question "+QNUM[e.id+"-surl-"+i]+" (surlignage) : "+it.titre);
+   L.push("  Passages relevés : "+(sel.length?sel.map(function(j){ return it.segments[j]; }).join(" | "):"(aucun)"));
+   L.push("  Résultat : "+(st==="ok"?"validé":st==="ko"?"dernier essai incorrect":"(non vérifié)")); }); }
+  if(e.hotspots){ e.hotspots.forEach(function(it,i){ var vis=state.answers[aKey("hs",e.id,i)]||[];
+   L.push("Analyse d'image : "+it.titre);
+   L.push("  Repères explorés : "+vis.length+"/"+it.zones.length); }); }
+  e.qcm.forEach(function(q,i){ var v=state.answers[aKey("qcm",e.id,i)];
+   L.push("Question "+QNUM[e.id+"-qcm-"+i]+" : —");
+   L.push("  Réponse : "+(v!==undefined?String.fromCharCode(65+v):"(sans réponse)")); });
+  if(e.association){ var sel2=state.answers[aKey("assoc",e.id,0)]||{}; L.push("Question "+QNUM[e.id+"-assoc-0"]+" (association) : "+(e.association.titre||""));
+   e.association.paires.forEach(function(p,i){ L.push("  "+p.nom+" → "+(sel2[i]!==undefined?e.association.paires[sel2[i]].acte:"(non associé)")); }); }
+  if(e.trous){ L.push("Question "+QNUM[e.id+"-trou-0"]+" (texte à trous) : mots à compléter");
+   L.push("  Mots saisis : "+e.trous.trous.map(function(w,j){ return String(state.answers[aKey("trou",e.id,j)]||"?"); }).join(" | "));
+   var tst=state.answers[aKey("trouState",e.id,0)];
+   L.push("  Résultat : "+(tst==="ok"?"validé":tst==="ko"?"dernier essai incorrect":"(non vérifié)")); }
+  if(e.frise){ L.push("Question "+QNUM[e.id+"-frise-0"]+" (chronologie) : ordre reconstitué des événements");
+   var p2=state.answers[aKey("frise",e.id,0)]||[];
+   p2.forEach(function(v,i){ L.push("  "+(i+1)+". "+e.frise.evenements[v]); });
+   if(!p2.length){ L.push("  (non reconstituée)"); } }
+  e.ouvertes.forEach(function(q,i){ L.push("Question "+QNUM[e.id+"-open-"+i]+" (analyse) : "+q.q);
+   L.push("  "+(String(state.answers[aKey("open",e.id,i)]||"").trim()||"(sans réponse)")); });
+  if(e.audience){ e.audience.objections.forEach(function(o,oi){ var v=state.answers[aKey("aud",e.id,oi)];
+   L.push("Question "+QNUM[e.id+"-aud-"+oi]+" (audience) : objection "+(oi+1));
+   L.push("  Pièce choisie : "+(v!==undefined?"n° "+PNUM[o.options[v]]+" — "+DOCS[o.options[v]].titre:"(sans réponse)")); }); }
+  L.push("");
+ });
+ L.push("Score QCM : "+scoreQcm()+" / "+totalQcm());
+ return L.join("\n");
+}
+
+// ================= HTML : fond, entête, navigation =================
+function bgHTML(){
+ var B=[
+  ["1osHCiA3GS9M1oWo90u2sy92-zcXTvJBx","left:2%;top:6%;width:12.5%;transform:rotate(-2.2deg)"],
+  ["11UjyYDQ3WHpIi78qCow3Tu6JN-kZ83Mg","left:2.4%;top:62%;width:11.5%;transform:rotate(1.6deg)"],
+  ["1nim1CFp1K6yiUeeETFBqaKEUAb_-xjNY","left:84.5%;top:6%;width:12.5%;transform:rotate(2deg)"]
+ ];
+ function pins(list){ var h=""; list.forEach(function(p){
+  h+='<div class="pin" style="'+p[1]+'"><img src="https://lh3.googleusercontent.com/d/'+p[0]+'=w640" alt="" loading="lazy" onerror="this.parentElement.style.display=\'none\'"><i></i></div>';
+ }); return h; }
+ return '<div class="wall"></div><div class="rail"></div>'
+ +'<div class="board big">'
+ +'<div class="stamp" style="left:85%;top:46%">Affaire n&#176; 12-1497</div>'
+ +pins(B)
+ +'<div class="cord" style="left:14%;top:13%;width:71%;transform:rotate(-0.6deg)"></div>'
+ +'<div class="cord" style="left:14%;top:76%;width:71%;transform:rotate(0.8deg)"></div>'
+ +'<div class="cord" style="left:90.5%;top:37%;width:4%;transform:rotate(-28deg)"></div>'
+ +'<div class="cord" style="left:30%;top:30%;width:38%;transform:rotate(16deg)"></div>'
+ +'<div class="note" style="left:4%;top:34%;transform:rotate(-2.5deg);font-style:italic;font-weight:700;font-size:11px">6 corps ?</div>'
+ +'<div class="note" style="left:84%;top:63%;transform:rotate(3deg);font-style:italic;font-weight:700;font-size:11px">Un lynchage ?</div>'
+ +'</div>'
+ +'<div class="deskzone"></div>'
+ +'<div class="pin deskph" style="right:4%;bottom:4.5%;width:13.5%;transform:rotate(2deg)"><img src="https://lh3.googleusercontent.com/d/1iURWzONODEnQMbm7bV9_5Vve4IdwtNAE=w800" alt="Dulag Luft" loading="lazy" onerror="this.parentElement.style.display=\'none\'"></div>'
+ +'<div class="sheet" style="left:21%;bottom:7%;transform:rotate(-7deg)"></div>'
+ +'<div class="sheet" style="left:30%;bottom:5%;transform:rotate(5deg)"></div>'
+ +'<svg class="lamp" viewBox="0 0 260 380" preserveAspectRatio="xMaxYMax meet">'
+ +'<defs><radialGradient id="bulb" cx="0.5" cy="0.5" r="0.5"><stop offset="0%" stop-color="rgba(255,228,168,0.9)"/><stop offset="100%" stop-color="rgba(255,200,120,0)"/></radialGradient>'
+ +'<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,205,130,0.35)"/><stop offset="100%" stop-color="rgba(255,205,130,0)"/></linearGradient></defs>'
+ +'<polygon points="96,116 18,380 182,380" fill="url(#beam)"/>'
+ +'<ellipse cx="100" cy="378" rx="96" ry="14" fill="url(#bulb)" opacity="0.55"/>'
+ +'<ellipse cx="212" cy="366" rx="46" ry="10" fill="#1c150d" stroke="#7b7466" stroke-width="2"/>'
+ +'<g stroke="#7b7466" stroke-width="7" stroke-linecap="round" fill="none">'
+ +'<path d="M212 360 L204 250"/><path d="M204 250 L128 152"/><path d="M128 152 L98 108"/></g>'
+ +'<g stroke="#57503f" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4" fill="none">'
+ +'<path d="M226 348 L212 258"/><path d="M196 246 L150 168"/></g>'
+ +'<circle cx="204" cy="250" r="7" fill="#3b352a" stroke="#8a8060" stroke-width="2.5"/>'
+ +'<circle cx="128" cy="152" r="6" fill="#3b352a" stroke="#8a8060" stroke-width="2.5"/>'
+ +'<g transform="rotate(38 98 108)"><path d="M98 108 L162 76 L186 122 Q172 142 140 147 Z" fill="#241c10" stroke="#8a8060" stroke-width="3"/></g>'
+ +'<circle cx="86" cy="130" r="13" fill="url(#bulb)"/><circle cx="86" cy="130" r="5" fill="rgba(255,235,180,0.9)"/>'
+ +'</svg>'
+ +'<div class="glow"></div><div class="vignette"></div>';
+}
+function headerHTML(){
+ return '<header class="top"><div class="hbar"><div class="brand-ico"><div class="r">&#9878;</div></div>'
+ +'<div class="brand"><p class="l1">DOSSIER N&#176; 12-1497 | WAR CRIMES COMMISSION</p><p class="l2">Enquête sur le lynchage de R&#252;sselsheim</p></div>'
+ +'<div class="hbtns"><button class="hbtn '+(state.musicOn?"on":"")+(state.musicFail?" fail":"")+'" onclick="'+(state.musicFail?"G.pickMusic()":"G.toggleMusic()")+'" title="'+(state.musicFail?"musique.mp3 introuvable à côté du fichier HTML — clique ici pour choisir ton fichier MP3":"Nécessite le fichier musique.mp3 à côté du fichier HTML")+'">'+(state.musicFail?"Musique indisponible":"Musique")+'</button><input type="range" class="vol" min="0" max="100" step="1" value="'+Math.round((state.vol||0.4)*100)+'" oninput="G.setVol(this.value/100)" title="Volume de la musique"><button class="hbtn '+(state.sfxOn?"on":"")+'" onclick="G.toggleSfx()">Sons</button>'
+ +'<button class="hbtn '+(state.teacher?"on":"")+'" onclick="G.gateTeacher()">'+(state.teacher?"Mode enseignant &#10003;":"Aperçu enseignant")+'</button></div></div>'
+ +'<div class="hsub"><p>Avancement de l\'enquête : '+progress()+' %</p><p>'+Object.keys(state.validated).length+'/'+PARTIES+' parties validées</p></div>'
+ +'<div class="pbarw"><div class="pbar" style="width:'+progress()+'%"></div></div></header>';
+}
+function sideHTML(){
+ var u=unlockedUpTo();
+ var nbP=0; PIECES.forEach(function(p){ if(state.answers["doc-"+p.k]) nbP++; });
+ var nbV=Object.keys(state.validated).length;
+ var h='<aside class="side"><div class="lvcard"><p class="lvc-t">Ton livret d\'enquêteur</p><p class="lvc-s">'+nbP+' pièce'+(nbP>1?'s':'')+' versée'+(nbP>1?'s':'')+' au dossier · '+nbV+'/'+PARTIES+' parties validées</p><button class="lvc-b" onclick="G.toggleLivret()">&#128194; Ouvrir le livret</button></div><p class="somtit">Dossiers de l\'enquête</p><nav class="navbox">';
+ ETAPES.forEach(function(e,i){ var unl=i<=u||state.validated[i]||(!!e.final&&!!state.validated[i-1]); var done=state.validated[i];
+  h+='<button class="'+(state.step===i?"act":(done?"done":""))+'" '+(unl?"":"disabled")+' onclick="G.go('+i+')">'+(done?"&#10003; ":(unl?"&#8226; ":"&#128274; "))+LABELS[i]+' — '+esc(e.titre)+'</button>'; });
+ h+='</nav><p class="saver">&#9679; Sauvegarde automatique activée</p>';
+ h+='<div class="sombox"><p class="somtit">Pièces à conviction</p><ul>';
+ var hid=0;
+ PIECES.forEach(function(p,idx){ var ul=p.step<=u||state.validated[p.step];
+  if(!ul&&!state.teacher){ hid++; return; }
+  h+='<li><button '+(ul?"":"disabled")+' onclick="G.go('+p.step+')" onmouseenter="G.peekIn(\''+p.k+'\',event)" onmouseleave="G.peekOut()"><span class="pn">Pièce '+(idx+1)+' &#183;</span> '+esc(DOCS[p.k].titre)+'</button></li>'; });
+ if(hid){ h+='<li class="sealed">&#128274; '+hid+' pi\u00e8ce'+(hid>1?'s':'')+' encore scell\u00e9e'+(hid>1?'s':'')+'\u2026 \u00c0 toi de les d\u00e9couvrir.</li>'; }
+ h+='</ul></div><button class="restart" onclick="G.restart()">&#8634; Recommencer l\'enquête</button></aside>';
+ return h;
+}
+function navMobHTML(){
+ var u=unlockedUpTo();
+ var h='<nav class="navmob">';
+ ETAPES.forEach(function(e,i){ var unl=i<=u||state.validated[i]||(!!e.final&&!!state.validated[i-1]); var done=state.validated[i];
+  h+='<button class="'+(state.step===i?"act":(done?"done":""))+'" '+(unl?"":"disabled")+' onclick="G.go('+i+')">'+(done?"&#10003; ":unl?"":"&#128274; ")+ROMAINS[i]+'</button>'; });
+ return h+'</nav>';
+}
+
+// ================= images =================
+var ZOOMREG={}, zoomN=0;
+function imgTag(src,alt,cls){
+ var id="z"+(zoomN++); ZOOMREG[id]={src:src,alt:alt||""};
+ return '<span class="imgwrap'+(cls?" "+cls:"")+'"><img src="'+esc(src)+'" alt="'+esc(alt)+'" decoding="async" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.classList.add(\'fail\')" onclick="G.zoomK(\''+id+'\')"></span>';
+}
+
+// ================= lettre d'introduction =================
+function lettreHTML(){
+ var opened=!!state.answers["lettreOuverte"];
+ var name=state.answers["enqueteur"]||"";
+ if(!opened){
+  return '<div class="introbox"><p class="mode">— Mode d\'emploi de l\'enquête —</p><ul>'
+  +'<li>1. Lis attentivement chaque pièce à conviction du dossier (photographies, articles de presse, circulaires secrètes, dessins de propagande…).</li>'
+  +'<li>2. Réponds aux questions du procureur : QCM, passages à surligner, zones à explorer dans les dessins, associations à reconstituer, questions d\'analyse.</li>'
+  +'<li>3. Tu ne peux valider une partie que lorsque toutes les questions sont traitées : l\'enquête avance partie par partie.</li>'
+  +'<li>4. Ta progression est sauvegardée automatiquement : tu peux reprendre l\'enquête plus tard.</li>'
+  +'<li>5. À la fin, ton rapport d\'enquête complet devra être copié et remis au procureur (ton professeur).</li>'
+  +'</ul>'
+  +'<label for="namein">Nom de l\'enquêteur :</label>'
+  +'<input id="namein" class="namein" value="'+esc(name)+'" placeholder="Écris ici ton nom d\'enquêteur" oninput="G.name(this.value)">'
+  +'<div class="envletw"><div class="envlet" onclick="G.openLetter(this)">'
+  +'<div class="back"></div><div class="flap2"></div>'
+  +'<div class="face"><p class="w1">WAR CRIMES COMMISSION</p><p class="w2">Dossier n° 12-1497</p><p class="w3">Personnel : Lieutenant-Colonel Leon Jaworski</p><p class="w4">Confidentiel</p></div>'
+  +'</div></div>'
+  +'<p class="envhint" id="envhint">Clique sur l\'enveloppe pour ouvrir la lettre du procureur'+(String(name).trim()?"":" (indique d\'abord ton nom)")+'.</p>'
+  +'</div>';
+ }
+ var polas=[
+  [IMG.marche45,"La place du marché de Rüsselsheim pendant la reconstruction d'après-guerre (archives de Rüsselsheim).","r1"],
+  [IMG.dossier12,"La commission du tribunal militaire américain, Darmstadt, 27 juillet 1945 (NARA).","r2"],
+  [IMG.tribunal,"Juillet 1945, la commission militaire américaine enquête dans la Grabenstrasse, où les aviateurs américains ont été assassinés (archives de Rüsselsheim).","r3"]
+ ];
+ var ph="";
+ polas.forEach(function(p){ ph+='<div class="pola '+p[2]+'">'+imgTag(p[0],"")+ '<p class="pl">'+esc(p[1])+'</p></div>'; });
+ return '<div class="letter"><div class="lbody">'
+ +'<div class="lhead"><div><p class="a">WAR CRIMES COMMISSION</p><p class="b">Section des crimes de guerre — Bureau du procureur</p></div><p class="c">Darmstadt, le 1er juillet 1945<br>Dossier n° 12-1497</p></div>'
+ +'<p class="l">À l\'enquêteur '+(String(name).trim()?esc(name):"chargé du dossier")+',</p>'
+ +'<p class="l">En mai 1945, la guerre est finie à Rüsselsheim. La 3e armée américaine a pris la ville. Des travailleurs forcés français et polonais informent nos officiers que des habitants de Rüsselsheim auraient assassiné en août 1944 huit aviateurs canadiens. En juin, une commission militaire à Darmstadt nouvellement créée pour les crimes de guerre au sein de l\'armée américaine ouvre une enquête. Le 28 juin, six corps sont exhumés et quatre d\'entre eux sont identifiés. Ces aviateurs tués n\'étaient pas Canadiens, mais Américains.</p>'
+ +'<p class="l">Tu trouveras ci-joint les premières pièces du dossier. Ton travail : lire chaque pièce, analyser les sources et répondre aux questions du procureur. Pour chaque document, consulte la transcription et, quand il est disponible, le document original. À la fin de ton enquête, ton rapport complet devra être copié et remis au procureur (ton professeur), qui établira ta note.</p>'
+ +'<p class="l">Bonne enquête. Chaque pièce compte.</p>'
+ +'<div class="polas">'+ph+'</div>'
+ +'<div class="lsign"><p class="sl">Le procureur,<br>Section des crimes de guerre</p><div class="sr"><p class="n">Leon Jaworski</p><p class="r">Lieutenant-Colonel — Chef de la Section des crimes de guerre</p></div></div>'
+ +'</div></div>';
+}
+
+// ================= pièce à conviction =================
+function indexOfDoc(list,k){ for(var i=0;i<list.length;i++){ if(list[i].doc===k)return i; } return -1; }
+function surlHTML(item,sid,idx){ // consigne : dans les questions du procureur
+ var st=state.answers[aKey("surlState",sid,idx)]||null;
+ var num=PNUM[item.doc];
+ var h='<div class="qitem"><p class="qq">Question '+QNUM[sid+"-surl-"+idx]+'. '+esc(item.consigne)+'</p>'
+ +'<p class="mq2">À compléter dans la pièce n° '+num+' « '+esc(item.titre)+' », dans les pièces du dossier ci-dessus.'
+ +(st==="ok"?' <span class="okmark">✔ Validé</span>':st==="ko"?' <span class="komark">✘ Dernier essai incorrect</span>':'')+'</p>'
+ +'</div>';
+ return h;
+}
+function surlSegHTML(item,sid,idx){ // segments cliquables : dans la carte de la pièce
+ var sel=state.answers[aKey("surl",sid,idx)]||[];
+ var st=state.answers[aKey("surlState",sid,idx)]||null;
+ var locked=st==="ok";
+ var h='<div class="surl" style="margin-top:.75rem"><p class="surlhead">Question '+QNUM[sid+"-surl-"+idx]+' — à surligner dans cette pièce</p><p style="line-height:2;font-size:15px">';
+ item.segments.forEach(function(s,j){
+  var isSel=sel.indexOf(j)>=0, isOk=item.ok.indexOf(j)>=0, cls="seg";
+  if(st){ if(locked){ cls+=isOk?" ok":" no"; } else if(isSel){ cls+=isOk?" sel":" bad"; } }
+  else if(isSel){ cls+=" sel"; }
+  h+='<span class="'+cls+'" onclick="G.surlToggle('+sid+','+idx+','+j+')">'+esc(s)+'</span> ';
+ });
+ h+='</p>';
+ if(!locked){ h+='<button class="surlbtn" '+(sel.length?"":"disabled")+' onclick="G.surlCheck('+sid+','+idx+')">Vérifier le surlignage</button>'; }
+ if(st==="ko"){ h+='<p class="fb-ko">✘ Ce n\'est pas le bon passage : reprends le surlignage.</p>'; }
+ if(locked){ h+='<p class="fb-ok">✔ Surlignage exact. Le procureur valide ton relevé.</p>'; }
+ return h+'</div>';
+}
+function hotBlock(item,sid,idx,d,k){
+ var vis=state.answers[aKey("hs",sid,idx)]||[];
+ var zid="z"+(zoomN++); ZOOMREG[zid]={src:d.img,alt:d.titre||""};
+ var h='<span class="imgwrap hotwrap"><img src="'+esc(d.img)+'" alt="'+esc(d.titre)+'" decoding="async" onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.classList.add(\'fail\')" onclick="G.zoomK(\''+zid+'\')">';
+ item.zones.forEach(function(z,zi){
+  h+='<button class="hzone'+(vis.indexOf(zi)>=0?" vis":"")+'" style="left:'+z.x+'%;top:'+z.y+'%" onclick="G.hs('+sid+','+idx+','+zi+',\''+k+'\')">'+(zi+1)+'</button>';
+ });
+ var cur=ui.hz[k];
+ if(cur!==undefined&&cur!==null){ var z=item.zones[cur]; var bx=Math.min(Math.max(z.x,30),70);
+  h+='<div class="zbox hzbox" style="left:'+bx+'%;top:'+(z.y+9)+'%"><p class="zl">'+esc(z.label)+'</p><p class="zt">'+esc(z.texte)+'</p></div>'; }
+ h+='</span>';
+ h+='<div class="hotinfo"><p class="cons">'+esc(item.consigne)+'</p>';
+ return h+'</div>';
+}
+function docCardHTML(k,et){
+ var d=DOCS[k], num=PNUM[k], cap=et.captions?et.captions[k]:null;
+ var open=!!state.answers["doc-"+k];
+ var paper=!!d.epoque;
+ if(!open){
+  return '<div class="env '+(paper?"paper":"dark")+'" onclick="G.openDoc(\''+k+'\',this)">'
+  +'<div class="cardface"><div class="inner"><div class="flap"></div>'
+  +'<div class="face">'+(num?'<p class="pn">Pièce à conviction n° '+num+'</p>':'')
+  +'<p class="ti">'+esc(d.titre)+'</p>'
+  +'<p class="tampon">WCC — Darmstadt 1945</p></div></div></div>'
+  +'<p class="hint">Clique pour ouvrir la pièce</p></div>';
+ }
+ var sIdx=et.surlignages?indexOfDoc(et.surlignages,k):-1;
+ var both=!!(d.texte&&d.img&&!d.descriptif&&sIdx<0);
+ var stab=!!(sIdx>=0&&d.img);
+ var tab=ui.tabs[k]||"trans";
+ var hIdx=et.hotspots?indexOfDoc(et.hotspots,k):-1;
+ var h='<div class="doc '+(paper?"paper":"dark")+'">'
+ +(num?'<div class="corner">Pièce n° '+num+'</div>':'')
+ +'<div class="dhead"><span class="ic">&#9638;</span><p class="t">'+esc(d.titre)+'</p></div>';
+ if(both||stab){
+  h+='<div class="tabs"><button class="'+(tab==="trans"?"act":"")+'" onclick="G.tab(\''+k+'\',\'trans\')">Transcription</button><button class="'+(tab==="img"?"act":"")+'" onclick="G.tab(\''+k+'\',\'img\')">Document original</button></div>';
+ }
+ h+='<div class="body">';
+ if(sIdx>=0){
+  if(tab==="img"&&d.img){ h+=imgTag(d.img,d.titre); }
+  else { h+=surlSegHTML(et.surlignages[sIdx],et.id,sIdx); }
+ } else if(d.images){
+  d.images.forEach(function(im){
+   h+='<div style="margin-bottom:1.25rem">';
+   if(im.srcs){ im.srcs.forEach(function(s2){ h+=imgTag(s2,d.titre); }); }
+   else { h+=imgTag(im.src,d.titre); }
+   if(im.caption){ h+='<p class="cap">'+esc(im.caption)+'</p>'; }
+   h+='</div>';
+  });
+  if(d.texte){ h+='<div class="tx">'+txp(d.texte)+'</div>'; }
+ } else if(d.descriptif){
+  if(d.img){ h+=(hIdx>=0)?hotBlock(et.hotspots[hIdx],et.id,hIdx,d,k):imgTag(d.img,d.titre); }
+  if(d.texte){ h+='<div class="tx" style="margin-top:.75rem">'+txp(d.texte)+'</div>'; }
+ } else {
+  if(tab==="img"&&d.img){ h+=imgTag(d.img,d.titre); }
+  if(tab==="trans"){
+   if(d.texte){ h+='<div class="tx">'+txp(d.texte)+'</div>'; }
+   else if(d.img){ h+=imgTag(d.img,d.titre); }
+  }
+ }
+ if(d.source){ h+='<p class="src">Source : '+esc(d.source)+'</p>'; }
+ if(cap){ h+='<p class="cap">'+esc(cap)+'</p>'; }
+ return h+'</div></div>';
+}
+
+// ================= questions =================
+function qcmHTML(q,sid,i,show){
+ var v=state.answers[aKey("qcm",sid,i)];
+ var h='<div class="qitem"><p class="qq">Question '+QNUM[sid+"-qcm-"+i]+'. '+esc(q.q)+'</p>';
+ q.options.forEach(function(o,j){
+  var cls="qopt";
+  if(show&&j===q.ok){ cls+=" good"; }
+  else if(show&&v===j&&j!==q.ok){ cls+=" bad"; }
+  else if(v===j){ cls+=" sel"; }
+  h+='<button class="'+cls+'" onclick="G.qcm('+sid+','+i+','+j+')">'+String.fromCharCode(65+j)+'. '+esc(o)+'</button>';
+ });
+ return h+'</div>';
+}
+function openQHTML(q,sid,i){
+ var fmt=q.fmt==="c"?"Réponse courte – 1 à 2 phrases":q.fmt==="r"?"Réponse rédigée – 3 à 4 phrases":q.fmt==="r4"?"Réponse rédigée – 4 phrases minimum":"";
+ return '<div class="qitem"><p class="qq">Question '+QNUM[sid+"-open-"+i]+'. '+esc(q.q)+'</p>'
+ +(fmt?'<p class="fmt">'+fmt+'</p>':'')
+ +'<textarea class="open" rows="'+(q.min>1?4:3)+'" placeholder="Rédige ta réponse..." oninput="G.openQ('+sid+','+i+',this)">'+esc(state.answers[aKey("open",sid,i)]||"")+'</textarea>'
+ +'<p class="mhint">Réponse obligatoire pour valider la partie.</p></div>';
+}
+function audienceHTML(et,sid){
+ var A=et.audience, show=!!(state.showQcm[sid]||state.teacher);
+ var h='<div class="qitem">'
+ +'<p class="qq">Question '+QNUM[sid+"-aud-0"]+'. '+esc(A.consigne)+'</p>'
+ +'<p class="fmt">Audience finale — réfuter la défense en citant le dossier</p>';
+ A.objections.forEach(function(o,oi){
+  var sel=state.answers[aKey("aud",sid,oi)];
+  h+='<div class="objcard"><p class="objtag">Objection '+(oi+1)+' / '+A.objections.length+' — la défense</p>'
+  +'<p class="objarg">&#171; '+esc(o.arg)+' &#187;</p>'
+  +'<p class="objq">Question '+QNUM[sid+"-aud-"+oi]+' — Quelle pièce du dossier réfute cette objection ?</p>'
+  +'<div class="objopts">';
+  o.options.forEach(function(k,ki){
+   var d=DOCS[k];
+   var src=d.img||(d.images?(d.images[0].srcs?d.images[0].srcs[0]:d.images[0].src):null);
+   h+='<button class="objopt'+(sel===ki?" sel":"")+(show&&ki===o.ok?" ok":"")+(show&&sel===ki&&ki!==o.ok?" ko":"")+'" onclick="G.pickAud('+sid+','+oi+','+ki+')">'
+   +(src?'<img src="'+esc(src)+'" alt="" loading="lazy">':'<span class="oi">&#128196;</span>')
+   +'<span class="opn">Pièce n° '+PNUM[k]+'</span><span class="ot">'+esc(d.titre)+'</span></button>';
+  });
+  h+='</div>';
+  if(show){
+   h+='<div class="objexp">'
+   +(sel===o.ok
+     ?'<p class="oexp ok">&#10003; Bien vu : la pièce n° '+PNUM[o.options[o.ok]]+' fait tomber l\'objection.</p>'
+     :(sel!==undefined
+       ?'<p class="oexp ko">&#10007; Ce n\'était pas la pièce décisive. Relis : la pièce n° '+PNUM[o.options[o.ok]]+' réfute l\'objection.</p>'
+       :'<p class="oexp ko">&#10007; Objection restée sans réponse. La pièce n° '+PNUM[o.options[o.ok]]+' la réfutait.</p>'))
+   +'<p>'+esc(o.exp)+'</p></div>';
+  }
+  h+='</div>';
+ });
+ return h+'</div>';
+}
+function epilogueHTML(){
+ var h='<div class="doc paper">'
+ +'<div class="corner">Verdict</div>'
+ +'<div class="dhead"><span class="ic">&#9878;</span><p class="t">Le verdict — Darmstadt, 2 août 1945</p></div>'
+ +'<div class="body"><div class="tx">'
+ +txp("À la fin du mois de juillet 1945, onze habitants de Rüsselsheim comparaissent devant la commission militaire américaine de Darmstadt. Le procès dure six jours : les deux survivants, les sergents Adams et Brown, témoignent, ainsi que le vieil instituteur Keil qui avait tenté de s'interposer.\n\nLa défense plaide que la propagande du régime est seule coupable : les habitants auraient été « excités » par les discours de Goebbels. Le procureur Jaworski répond : « Ce sont tous des hommes et des femmes adultes. Si on leur ordonne de commettre un meurtre et qu'ils le commettent, ils sont aussi responsables que n'importe quel autre meurtrier. »\n\nLe 2 août 1945, le verdict tombe. Sept accusés sont condamnés à mort : Josef Hartgen, Johannes Seipel, Philipp Gutlich, Friedrich Wust, Johann Opper, et les deux sœurs Margarete Witzler et Käthe Reinhardt. Karl Fugmann est acquitté. Heinrich Barthel et August Wolf sont condamnés à 15 ans de travaux forcés, Georg Daum à 25 ans.\n\nSur la demande de leurs familles, la peine des deux sœurs, qui n'ont « que » crié, est commuée en 30 ans de travaux forcés. Le 10 novembre 1945, Josef Hartgen et les quatre autres condamnés sont pendus à la prison de Bruchsal.\n\nÀ partir de décembre 1953, les condamnés restants sont libérés : Witzler et Reinhardt le 19 décembre 1953, Barthel et Wolf le 21 décembre 1953, Daum le 5 février 1954. Tous rentrent vivre à Rüsselsheim, au milieu des familles des victimes et des témoins.")
+ +'</div>'
+ +imgTag(IMG.proces,"Le procès de Rüsselsheim devant la commission militaire américaine, Darmstadt, juillet 1945 (NARA)")
+ +'</div></div>';
+ h+='<div class="doc paper">'
+ +'<div class="corner">Mémoire</div>'
+ +'<div class="dhead"><span class="ic">&#10014;</span><p class="t">La mémoire des six aviateurs</p></div>'
+ +'<div class="body"><div class="tx">'
+ +txp("Pendant des décennies, la ville garde le silence sur le lynchage. Le mur de la Grabenstrasse, contre lequel les aviateurs sont tombés, est démoli en 1986 sans qu'aucune plaque ne le mentionne jamais.\n\nEn 2001, à l'initiative d'un groupe d'habitants, la ville invite officiellement un survivant, le sergent Sidney Eugene Brown. Il revient sur les lieux du crime et lance un appel à la réconciliation. En 2004, pour le 60e anniversaire du massacre, un mémorial est inauguré dans la Grabenstrasse. Son inscription rappelle qu'ici, le 26 août 1944, huit aviateurs américains faits prisonniers ont été poursuivis et lynchés par une foule excitée, après un bombardement britannique de Rüsselsheim.\n\nSix noms y sont gravés : Norman J. Rogers Jr., John N. Sekul, Haigus Tufenkjian, Thomas D. Williams Jr., William A. Dumont et Elmore L. Austin. William Adams et Sidney Eugene Brown ont survécu. Depuis 2004, la ville commémore les six aviateurs chaque année ; en 2024, pour le 80e anniversaire, la municipalité rappelle que « se souvenir est un devoir ».")
+ +'</div>'
+ +imgTag(IMG.equipageNB,"L'équipage du « Wham! Bam! Thank You Ma'm » devant son B-24 (USAAF)")
+ +'</div></div>';
+ h+='<div class="finwrap"><span class="finstamp">Affaire classée — n° 12-1497</span></div>';
+ return h;
+}
+var lvPage=0;
+function lvPgLabel(p){ return p===0?"Couverture":(LABELS[p-1]+" · "+p+"/"+ETAPES.length); }
+function lvSyncNav(){
+ var pg=document.getElementById("lvpg"),bl=document.getElementById("lvprev"),br=document.getElementById("lvnext"),zl=document.getElementById("lvzl"),zr=document.getElementById("lvzr");
+ if(pg){ pg.innerHTML=lvPgLabel(lvPage); }
+ if(bl){ bl.disabled=(lvPage<=0); }
+ if(br){ br.disabled=(lvPage>=ETAPES.length); }
+ if(zl){ zl.style.display=(lvPage<=0)?"none":"flex"; }
+ if(zr){ zr.style.display=(lvPage>=ETAPES.length)?"none":"flex"; }
+}
+function livretHTML(){
+ var h='<div class="chemise">'
+ +'<div class="chtop"><p class="chref">War Crimes Commission — Dossier n° 12-1497 — Rüsselsheim, 1945</p><button class="livclose" onclick="G.closeLivret()">Fermer ✕</button></div>'
+ +'<div class="pagezone"><button id="lvzl" class="turnz l" onclick="G.lvTurn(-1)" title="Page précédente">&#10094;</button>'
+ +'<div id="lvpage" class="lvpage">'+livretPageHTML(lvPage)+'</div>'
+ +'<button id="lvzr" class="turnz r" onclick="G.lvTurn(1)" title="Page suivante">&#10095;</button></div>'
+ +'<div class="lvnav"><button id="lvprev" class="lvbtn" onclick="G.lvTurn(-1)">&#10094; Précédente</button><p id="lvpg"></p><button id="lvnext" class="lvbtn" onclick="G.lvTurn(1)">Suivante &#10095;</button></div>'
+ +'</div>';
+ return h;
+}
+function livretPageHTML(p){
+ if(p===0){
+  var nom=String(state.answers["enqueteur"]||"").trim();
+  var nbP=0; PIECES.forEach(function(x){ if(state.answers["doc-"+x.k]) nbP++; });
+  var nbV=Object.keys(state.validated).length;
+  return '<div class="lvcover"><span class="lvstamp">War Crimes Commission</span>'
+  +'<p class="lvct">Dossier de l\'enquêteur</p>'
+  +'<p class="lvca">Affaire n° 12-1497 — Rüsselsheim, 1945'+(nom?'<br>'+esc(nom):'')+'</p>'
+  +'<p class="lvcc">'+nbP+' pièce'+(nbP>1?'s':'')+' versée'+(nbP>1?'s':'')+' au dossier · '+nbV+'/'+PARTIES+' parties validées</p>'
+  +'<p class="lvchint">Tourne les pages du dossier : une page par partie de l\'enquête. Clique sur les flèches ou sur les bords de la page. Clique sur une pièce pour la retrouver dans le dossier.</p></div>';
+ }
+ var e=ETAPES[p-1], i=p-1;
+ var u=unlockedUpTo();
+ var unl=i<=u||state.validated[e.id]||(!!e.final&&!!state.validated[e.id-1]);
+ if(!unl){
+  return '<div class="lvpgseal"><div class="lvseal">SCELLÉ</div><p class="lvps-t">'+LABELS[i]+' — '+esc(e.titre)+'</p><p class="lvs-s">Volet sous scellés : valide la partie précédente pour verser ces pièces au dossier.</p></div>';
+ }
+ var done=state.validated[e.id];
+ var pre=done?"&#10003; ":(e.final?"&#9733; ":(e.audience?"&#9878; ":"&#8226; "));
+ var h='<div class="lvsec'+(done?" done":" wip")+'"><div class="lvhead2"><span class="lvstampS '+(done?"ok":"wip")+'">'+(done?"VALIDÉE":(e.final?"À LIRE":"EN COURS"))+'</span><p class="lt">'+pre+LABELS[i]+' — '+esc(e.titre)+'</p></div>';
+ if(e.docs.length){
+  h+='<p class="lsub">Pièces versées au dossier — clique sur une pièce pour la retrouver</p><div class="lvpieces">';
+  e.docs.forEach(function(k){
+   var d=DOCS[k];
+   var src=d.img||(d.images?(d.images[0].srcs?d.images[0].srcs[0]:d.images[0].src):null);
+   var opened=!!state.answers["doc-"+k];
+   h+='<button class="lvp'+(opened?"":" dim")+'" onclick="G.goToPiece('+i+')" title="Aller à la pièce : '+esc(d.titre)+'">';
+   if(src){ h+='<img src="'+esc(src)+'" alt="'+esc(d.titre)+'" loading="lazy">'; } else { h+='<span class="lvi">&#128196;</span>'; }
+   h+='<span class="lpn">n° '+PNUM[k]+(opened?"":" — à ouvrir")+'</span></button>';
+  });
+  h+='</div>';
+ }
+ (e.surlignages||[]).forEach(function(s,si){
+  var sel=state.answers[aKey("surl",e.id,si)]||[]; var stt=state.answers[aKey("surlState",e.id,si)];
+  h+='<p class="lsub">Question '+QNUM[e.id+"-surl-"+si]+' — surlignage</p><p class="lval">'
+  +(sel.length?sel.map(function(j){ return esc(s.segments[j]); }).join(" · "):"<i>aucun passage relevé</i>")
+  +(stt==="ok"?' <span class="okmark">&#10003;</span>':stt==="ko"?' <span class="komark">&#10007;</span>':"")+'</p>';
+ });
+ e.qcm.forEach(function(q,qi){
+  var v=state.answers[aKey("qcm",e.id,qi)];
+  var show=state.showQcm[e.id]||state.teacher;
+  h+='<p class="lsub">Question '+QNUM[e.id+"-qcm-"+qi]+'</p><p class="lval">'
+  +(v!==undefined?String.fromCharCode(65+v)+". "+esc(q.options[v]):"<i>sans réponse</i>")
+  +(show&&v===q.ok?' <span class="okmark">&#10003;</span>':show&&v!==undefined?' <span class="komark">&#10007;</span>':"")+'</p>';
+ });
+ if(e.association){
+  var sel2=state.answers[aKey("assoc",e.id,0)]||{};
+  h+='<p class="lsub">Question '+QNUM[e.id+"-assoc-0"]+' — association</p><ul class="lp">';
+  e.association.paires.forEach(function(pp,pi){
+   h+='<li>'+esc(pp.nom)+' → '+(sel2[pi]!==undefined?esc(e.association.paires[sel2[pi]].acte):"<i>?</i>")+'</li>';
+  });
+  h+='</ul>';
+ }
+ if(e.trous){
+  var tw=e.trous.trous.map(function(w,j){ var v=state.answers[aKey("trou",e.id,j)]; return v?esc(v):"<i>?</i>"; });
+  var tst=state.answers[aKey("trouState",e.id,0)];
+  h+='<p class="lsub">Question '+QNUM[e.id+"-trou-0"]+' — texte à trous</p><p class="lval">'+tw.join(" / ")+(tst==="ok"?' <span class="okmark">&#10003;</span>':tst==="ko"?' <span class="komark">&#10007;</span>':"")+'</p>';
+ }
+ if(e.frise){
+  var p2=state.answers[aKey("frise",e.id,0)]||[];
+  h+='<p class="lsub">Question '+QNUM[e.id+"-frise-0"]+' — chronologie</p><ol class="lp" style="margin-top:.2rem">';
+  p2.forEach(function(v){ h+='<li>'+esc(e.frise.evenements[v])+'</li>'; });
+  if(!p2.length){ h+='<li><i>non reconstituée</i></li>'; }
+  h+='</ol>';
+ }
+ e.ouvertes.forEach(function(q,oi){
+  var v=String(state.answers[aKey("open",e.id,oi)]||"").trim();
+  h+='<p class="lsub">Question '+QNUM[e.id+"-open-"+oi]+' — analyse</p><p class="lval">'+(v?esc(v):"<i>en attente</i>")+'</p>';
+ });
+ if(e.audience){
+  var showA=state.showQcm[e.id]||state.teacher;
+  e.audience.objections.forEach(function(o,oi){
+   var v=state.answers[aKey("aud",e.id,oi)];
+   h+='<p class="lsub">Question '+QNUM[e.id+"-aud-"+oi]+' — audience</p><p class="lval">'
+   +(v!==undefined?'Pièce n° '+PNUM[o.options[v]]+' — '+esc(DOCS[o.options[v]].titre):"<i>sans réponse</i>")
+   +(showA&&v===o.ok?' <span class="okmark">&#10003;</span>':showA&&v!==undefined?' <span class="komark">&#10007;</span>':"")+'</p>';
+  });
+ }
+ if(e.final){ h+='<p class="lval"><i>Le verdict de 1945 et la mémoire des six aviateurs t\'attendent dans la dernière étape du dossier.</i></p>'; }
+ h+='</div>';
+ return h;
+}
+function trouHTML(item,sid){
+ var st=state.answers[aKey("trouState",sid,0)]||null;
+ var locked=st==="ok";
+ var h='<div style="border:1px solid #44403c;background:rgba(28,25,23,.7);border-radius:12px;padding:1rem;margin-bottom:1rem">'
+ +'<p class="mq1">Question '+QNUM[sid+"-trou-0"]+'. Texte à trous</p><p class="mq2">'+esc(item.consigne)+'</p>'
+ +'<p style="line-height:2.2;font-size:15px">';
+ item.morceaux.forEach(function(m,j){
+  h+=esc(m);
+  if(j<item.trous.length){
+   var v=String(state.answers[aKey("trou",sid,j)]||"");
+   var cls="tin";
+   if(st){ cls+=(v.trim().toLowerCase()===String(item.trous[j]).trim().toLowerCase())?" ok":" bad"; }
+   h+='<select class="'+cls+'" '+(locked?"disabled ":"")+'onchange="G.trou('+sid+','+j+',this)">'
+   +'<option value="">—</option>'
+   +item.opts[j].map(function(o){ return '<option value="'+esc(o)+'"'+(v===o?" selected":"")+'>'+esc(o)+'</option>'; }).join("")
+   +'</select>';
+  }
+ });
+ h+='</p>';
+ if(!locked){ h+='<button class="surlbtn" onclick="G.trouCheck('+sid+')">Vérifier le texte à trous</button>'; }
+ if(st==="ko"){ h+='<p class="fb-ko">✘ Certains mots sont incorrects : corrige-les, puis vérifie à nouveau.</p>'; }
+ if(locked){ h+='<p class="fb-ok">✔ Texte exact. Le procureur valide ta reconstitution.</p>'; }
+ return h+'</div>';
+}
+var ACTS=[5,2,7,0,4,1,6,3];
+function matchHTML(item,sid){
+ var sel=state.answers[aKey("assoc",sid,0)]||{};
+ var st=state.answers[aKey("assocState",sid,0)]||null;
+ var locked=st==="ok";
+ var picked=ui.picked[sid];
+ var acts=item.acts||ACTS;
+ var used=[]; for(var key in sel){ used.push(sel[key]); }
+ var h='<div style="border:1px solid #44403c;background:rgba(28,25,23,.7);border-radius:12px;padding:1rem;margin-bottom:1rem">'
+ +'<p class="mq1">Question '+QNUM[sid+"-assoc-0"]+'. '+esc(item.titre||"Association")+'</p><p class="mq2">'+esc(item.q)+'</p>'
+ +'<div class="matchgrid"><div class="matchrow">';
+ item.paires.forEach(function(p,i){
+  var has=sel[i]!==undefined;
+  var cls="mbtn"+(picked===i?" pick":"");
+  var style="";
+  if(has&&locked){ style=' style="border-color:rgba(6,95,70,.6);background:rgba(6,78,59,.2);color:#6ee7b7"'; }
+  h+='<button class="'+cls+'"'+style+' onclick="G.assocPick('+sid+','+i+')"><span class="nm">'+esc(p.nom)+'</span>';
+  if(has){ h+='<span class="as">→ '+esc(item.paires[sel[i]].acte)+'</span>'; if(!locked){ h+='<span class="rm">clique pour retirer</span>'; } }
+  h+='</button>';
+ });
+ h+='</div><div class="matchrow">';
+ acts.forEach(function(ai){
+  var isUsed=used.indexOf(ai)>=0;
+  var can=(picked!==undefined&&picked!==null)&&!isUsed;
+  var cls="mbtn"+(isUsed?" used":(can?" wait":""));
+  h+='<button class="'+cls+'"'+(isUsed||!can?" disabled":"")+' onclick="G.assocAssign('+sid+','+ai+')">'+esc(item.paires[ai].acte)+'</button>';
+ });
+ h+='</div></div>';
+ if(st==="ko"){ h+='<p class="fb-ko">✘ Certaines associations sont incorrectes : retire-les (clic sur le personnage) et recommence.</p>'; }
+ if(locked){ h+='<p class="fb-ok">✔ Toutes les associations sont exactes. Le procureur valide ton identification des coupables.</p>'; }
+ return h+'</div>';
+}
+function friseHTML(item,sid){
+ var placed=state.answers[aKey("frise",sid,0)]||[];
+ var st=state.answers[aKey("friseState",sid,0)]||null;
+ var locked=st==="ok";
+ var shuffle=[3,0,5,1,4,2];
+ var remaining=shuffle.filter(function(j){ return placed.indexOf(j)<0; });
+ var dates=item.dates||item.evenements.map(function(){ return ""; });
+ var h='<div style="border:1px solid #44403c;background:rgba(28,25,23,.7);border-radius:12px;padding:1rem;margin-bottom:1rem">'
+ +'<p class="mq1">Question '+QNUM[sid+"-frise-0"]+'. '+esc(item.q)+'</p>';
+ if(st){ h+=(locked?'<p class="fb-ok">✔ Chronologie exacte. Le procureur valide ta reconstitution.</p>':'<p class="fb-ko">✘ Chronologie incorrecte. Retire des événements et replace-les dans le bon ordre.</p>'); }
+ h+='<div class="frisewrap"><div class="frise"><div class="line"></div><div class="fgrid">';
+ item.evenements.forEach(function(_,pos){
+  var filled=placed[pos]!==undefined;
+  h+='<div class="fcol"><span class="fdot'+(filled?" on":"")+'">'+(pos+1)+'</span><p class="fdate">'+esc(dates[pos])+'</p>';
+  if(filled){
+   h+='<div class="fslot filled'+(locked?" ok":"")+'">'+esc(item.evenements[placed[pos]]);
+   if(!locked){ h+='<button class="frem" onclick="G.friseReset('+sid+','+pos+')">retirer</button>'; }
+   h+='</div>';
+  } else {
+   h+='<div class="fslot">'+(pos===0?"Clique un événement ci-dessous…":"…")+'</div>';
+  }
+  h+='</div>';
+ });
+ h+='</div></div></div>';
+ if(!locked){
+  h+='<div class="fpool"><p class="pt">Événements à replacer :</p>';
+  remaining.forEach(function(j){ h+='<button onclick="G.frisePlace('+sid+','+j+')">'+esc(item.evenements[j])+'</button>'; });
+  h+='</div>';
+ }
+ return h+'</div>';
+}
+function validHTML(et){
+ if(state.validated[et.id]){
+  var h='<div class="vdone"><p class="sc">✔ Partie validée. Score QCM : '+scoreQcm()+'/'+totalQcm()+'.</p>';
+  if(state.step<ETAPES.length-1){ h+='<button class="nextbtn" onclick="G.go('+(state.step+1)+')">Partie suivante →</button>'; }
+  return h+'</div>';
+ }
+ var ok=canValidate();
+ return '<button id="vbtn" class="vbtn '+(ok?"ok":"no")+'"'+(ok?"":" disabled")+' onclick="G.validate()">'+(ok?"Valider la partie":"Réponds à toutes les questions pour valider")+'</button>';
+}
+function reportHTML(){
+ return '<div class="report"><h2>Dossier clos — Rapport d\'enquête</h2>'
+ +'<p class="ri">Ton enquête est terminée : '+scoreQcm()+'/'+totalQcm()+' aux questions de vérification. Copie ton rapport d\'enquête complet (réponses QCM avec correction, éléments relevés, chronologie, réponses d\'analyse et tes réponses à l\'audience finale) et dépose-le sur l\'ENT ou envoie-le à ton professeur pour qu\'il établisse ta note.</p>'
+ +'<pre>'+esc(buildReport())+'</pre>'
+ +'<button id="copybtn" class="copybtn" onclick="G.copyReport()">Copier le rapport d\'enquête</button></div>';
+}
+
+// ================= page =================
+function mainContentHTML(){
+ var et=ETAPES[state.step], sid=et.id;
+ var h=navMobHTML()+'<h1 class="steph">'+esc(et.titre)+'</h1>';
+ if(sid===0){ h+=lettreHTML(); }
+ else {
+  h+='<div class="narr">'+esc(et.narrative)+'</div>';
+  if(et.docs.length){
+   h+='<div class="docsbox"><p class="doctit">— Pièces du dossier —</p>';
+   et.docs.forEach(function(k){ h+=docCardHTML(k,et); });
+   h+='</div>';
+  }
+ }
+ if(sid===0 && et.docs.length){
+  h+='<div class="docsbox"><p class="doctit">— Pièces du dossier —</p>';
+  et.docs.forEach(function(k){ h+=docCardHTML(k,et); });
+  h+='</div>';
+ }
+ if(et.final){
+  h+=epilogueHTML();
+  h+=reportHTML();
+ } else {
+  h+='<div class="qbox"><p class="doctit">'+(et.audience?'— L\'audience : réponds à la défense —':'— Questions du procureur —')+'</p>';
+  if(et.surlignages){ et.surlignages.forEach(function(s,i){ h+=surlHTML(s,sid,i); }); }
+  et.qcm.forEach(function(q,i){ h+=qcmHTML(q,sid,i,state.showQcm[sid]||state.teacher); });
+  if(et.association){ h+=matchHTML(et.association,sid); }
+  if(et.trous){ h+=trouHTML(et.trous,sid); }
+  if(et.frise){ h+=friseHTML(et.frise,sid); }
+  et.ouvertes.forEach(function(q,i){ h+=openQHTML(q,sid,i); });
+  if(et.audience){ h+=audienceHTML(et,sid); }
+  h+=validHTML(et);
+  h+='</div>';
+ }
+ h+='<p class="foot">Jeu d\'enquête pédagogique inspiré de The Darkest Files · Séquence histoire 3e — Seconde Guerre mondiale, guerre d\'anéantissement. · Site v1</p>';
+ return h;
+}
+function refreshVbtn(){
+ var b=document.getElementById("vbtn"); if(!b)return;
+ var ok=canValidate();
+ b.className="vbtn "+(ok?"ok":"no"); b.disabled=!ok;
+ b.textContent=ok?"Valider la partie":"Réponds à toutes les questions pour valider";
+}
+function copyText(t){
+ try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t); return; } }catch(e){}
+ try{ var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); }catch(e){}
+}
+function render(){
+ ZOOMREG={}; zoomN=0;
+ document.getElementById("app").innerHTML=headerHTML()+'<div class="shell">'+sideHTML()+'<main class="main">'+mainContentHTML()+'</main></div>';
+}
+
+// ================= handlers =================
+window.G={
+ go:function(i){ state.step=i; render(); },
+ toggleSfx:function(){ state.sfxOn=!state.sfxOn; render(); },
+ gateTeacher:function(){
+  var g=document.getElementById("gate");
+  if(!g) return;
+  if(state.teacher){ state.teacher=false; render(); return; }
+  g.style.display="block";
+  var i=document.getElementById("gatein");
+  if(i){ i.value=""; try{ i.focus(); }catch(e){} }
+ },
+ gateCheck:function(){
+  var g=document.getElementById("gate"), i=document.getElementById("gatein"), m=document.getElementById("gatemsg");
+  if(!g||!i) return;
+  if(String(i.value).trim()==="1944"){ g.style.display="none"; state.teacher=true; render(); }
+  else { if(m){ m.style.display="block"; } i.value=""; try{ i.focus(); }catch(e){} }
+ },
+ gateClose:function(){ var g=document.getElementById("gate"); if(g){ g.style.display="none"; } },
+ toggleMusic:function(){ state.musicOn=!state.musicOn; var a=ensureMusic(); if(state.musicOn){ state.musicFail=false; musicErrs=0; a.load(); a.play().catch(function(){ if(musicErrs>=3) failMusic(); }); } else { a.pause(); } render(); },
+ setVol:function(v){ v=Number(v); if(isNaN(v))return; v=Math.min(1,Math.max(0,v)); state.vol=v; if(musicEl){ musicEl.volume=v; } save(); },
+ pickMusic:function(){ var mp=document.getElementById("musicpick"); if(mp){ try{ mp.value=""; }catch(e){} mp.click(); } },
+ name:function(v){ setAQ("enqueteur",v); var hh=document.getElementById("envhint"); if(hh){ var n=String(v||"").trim(); hh.innerHTML="Clique sur l\'enveloppe pour ouvrir la lettre du procureur"+(n?"":" (indique d\'abord ton nom)")+"."; } },
+ openLetter:function(el){
+  if(state.answers["lettreOuverte"])return;
+  if(!String(state.answers["enqueteur"]||"").trim())return;
+  sfxPaper(); el.classList.add("opening");
+  setTimeout(function(){ setA("lettreOuverte",true); },900);
+ },
+ openDoc:function(k,el){
+  if(state.answers["doc-"+k])return;
+  sfxPaper(); el.classList.add("opening");
+  setTimeout(function(){ setA("doc-"+k,true); },700);
+ },
+ tab:function(k,t){ ui.tabs[k]=t; render(); },
+ surlToggle:function(sid,idx,j){
+  if(state.answers[aKey("surlState",sid,idx)]==="ok")return;
+  var s=(state.answers[aKey("surl",sid,idx)]||[]).slice();
+  var p=s.indexOf(j); if(p>=0){ s.splice(p,1); } else { s.push(j); }
+  setA(aKey("surl",sid,idx),s);
+ },
+ surlCheck:function(sid,idx){
+  var it=ETAPES[state.step].surlignages[idx];
+  var s=state.answers[aKey("surl",sid,idx)]||[];
+  var ok=s.length===it.ok.length&&it.ok.every(function(j){ return s.indexOf(j)>=0; });
+  if(ok){ sfxStamp(); }
+  setA(aKey("surlState",sid,idx),ok?"ok":"ko");
+ },
+ trou:function(sid,j,el){
+  if(state.answers[aKey("trouState",sid,0)]==="ok")return;
+  setAQ(aKey("trou",sid,j),el.value); refreshVbtn();
+ },
+ trouCheck:function(sid){
+  var it=ETAPES[state.step].trous;
+  var ok=it.trous.every(function(w,j){ var v=String(state.answers[aKey("trou",sid,j)]||"").trim().toLowerCase(); return v===String(w).trim().toLowerCase(); });
+  if(ok){ sfxStamp(); }
+  setA(aKey("trouState",sid,0),ok?"ok":"ko");
+ },
+ hs:function(sid,idx,zi,k){
+  var v=state.answers[aKey("hs",sid,idx)]||[];
+  ui.hz[k]=zi;
+  if(v.indexOf(zi)<0){ setA(aKey("hs",sid,idx),v.concat([zi])); } else { render(); }
+ },
+ qcm:function(sid,i,j){ if(state.showQcm[sid]||state.validated[sid])return; setA(aKey("qcm",sid,i),j); },
+ openQ:function(sid,i,el){ setAQ(aKey("open",sid,i),el.value); refreshVbtn(); },
+ pickAud:function(sid,oi,ki){ setAQ(aKey("aud",sid,oi),ki); refreshVbtn(); render(); },
+ toggleLivret:function(){ var lv=document.getElementById("livret"); if(!lv)return; if(lv.style.display!=="block"){ lv.innerHTML=livretHTML(); lvSyncNav(); lv.style.display="block"; } else { lv.style.display="none"; } },
+ closeLivret:function(){ var lv=document.getElementById("livret"); if(lv){ lv.style.display="none"; } },
+ lvTurn:function(dir){
+  var z=document.getElementById("lvpage"); if(!z) return;
+  var np=(typeof lvPage==="number"?lvPage:0)+dir;
+  if(np<0||np>ETAPES.length) return;
+  sfxPaper();
+  var cl=(dir>0?"out":"outl");
+  z.classList.add(cl);
+  setTimeout(function(){
+   lvPage=np;
+   z.innerHTML=livretPageHTML(np);
+   z.classList.remove(cl);
+   z.classList.add(dir>0?"in":"inl");
+   void z.offsetWidth;
+   z.classList.remove("in");
+   z.classList.remove("inl");
+   lvSyncNav();
+  },330);
+ },
+ goToPiece:function(s){ var lv=document.getElementById("livret"); if(lv){ lv.style.display="none"; } window.G.go(s); },
+ assocPick:function(sid,i){
+  var sel=state.answers[aKey("assoc",sid,0)]||{};
+  var st=state.answers[aKey("assocState",sid,0)];
+  if(sel[i]!==undefined&&st!=="ok"){
+   var s={}; for(var k in sel){ s[k]=sel[k]; } delete s[i];
+   setA(aKey("assoc",sid,0),s);
+  } else {
+   ui.picked[sid]=i; render();
+  }
+ },
+ assocAssign:function(sid,ai){
+  var p=ui.picked[sid];
+  if(p===undefined||p===null)return;
+  if(state.validated[state.step])return;
+  var sel=state.answers[aKey("assoc",sid,0)]||{};
+  var s={}; for(var k in sel){ s[k]=sel[k]; }
+  s[p]=ai; ui.picked[sid]=null;
+  setA(aKey("assoc",sid,0),s);
+ },
+ frisePlace:function(sid,j){
+  if(state.validated[state.step])return;
+  var p=(state.answers[aKey("frise",sid,0)]||[]).slice(); p.push(j);
+  setA(aKey("frise",sid,0),p);
+ },
+ friseReset:function(sid,pos){
+  var p=(state.answers[aKey("frise",sid,0)]||[]).slice(); p.splice(pos,1);
+  setA(aKey("frise",sid,0),p);
+ },
+ validate:function(){ validateStep(); },
+ copyReport:function(){
+  copyText(buildReport());
+  var b=document.getElementById("copybtn");
+  if(b){ b.textContent="Rapport copié ✓"; setTimeout(function(){ b.textContent="Copier le rapport d\'enquête"; },2500); }
+ },
+ restart:function(){
+  if(!window.confirm("Recommencer l\'enquête ? Toutes tes réponses seront effacées."))return;
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  state.answers={}; state.validated={}; state.showQcm={}; state.step=0;
+  ui.tabs={}; ui.hz={}; ui.picked={};
+  var lv=document.getElementById("livret"); if(lv){ lv.style.display="none"; }
+  render();
+ },
+ zoomK:function(id){
+  var z=ZOOMREG[id]; if(!z)return;
+  var lb=document.getElementById("lb");
+  if(!lb){ lb=document.createElement("div"); lb.id="lb"; document.body.appendChild(lb); }
+  lb.className="lightbox"; lb.style.display="flex";
+  lb.innerHTML='<img src="'+esc(z.src)+'" alt="'+esc(z.alt)+'"><p class="lx">Clique n\'importe où pour fermer</p>';
+  lb.onclick=function(){ lb.style.display="none"; lb.innerHTML=""; };
+ },
+ peekIn:function(k,ev){
+  var d=DOCS[k]; var src=d.images?d.images[0].src:d.img;
+  var pk=document.getElementById("peek");
+  pk.style.left=Math.min(ev.clientX+24,window.innerWidth-290)+"px";
+  pk.style.top=Math.max(12,ev.clientY-90)+"px";
+  pk.innerHTML='<div class="ph">Pièce n° '+PNUM[k]+'</div>'
+  +(src?'<img src="'+esc(src)+'" alt="">':'<div class="noimg">&#9638;</div>')
+  +'<p>'+esc(d.titre)+'</p>';
+  pk.style.display="block";
+ },
+ peekOut:function(){ document.getElementById("peek").style.display="none"; }
+};
+
+// ================= init =================
+document.getElementById("bg").innerHTML=bgHTML();
+render();
+
+</script>
+</body>
+</html>
